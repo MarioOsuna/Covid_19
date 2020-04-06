@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_maps">Map</string>
+    <string name="prompt_password">Password</string>
+    <string name="login">Login</string>
+    <string name="registrarse">Sign up</string>
+    <string name="nombre">Name</string>
+    <string name="apellido">Last Name</string>
+    <string name="medidas">"Prevention measures "</string>
+    <string name="sintomas">symptom</string>
+    <string name="mapa">Case Map</string>
+    <string name="fiebre">Fever (Over 39º)</string>
+    <string name="tos">Cough</string>
+    <string name="Dificultad">"Difficulty breathing "</string>
+    <string name="Visité">" I visited a country the last 14 days"</string>
+</resources>

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name" translatable="false">Covid-19</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="login">Inicio de sesión</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="registrarse">registrarse</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellidos</string>
+    <string name="medidas">Medidas de prevención</string>
+    <string name="sintomas">Síntomas</string>
+    <string name="mapa">Mapa de casos</string>
+    <string name="fiebre">Fiebre (Más de 39º)</string>
+    <string name="tos">tos</string>
+    <string name="Dificultad">Dificultad para respirar</string>
+    <string name="Visité">Visité un país los últimos 14 días</string>
+</resources>

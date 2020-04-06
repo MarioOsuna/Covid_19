@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrarActivity">
+
+    <EditText
+        android:id="@+id/editTextpass2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginBottom="29dp"
+        android:ems="10"
+        android:hint="@string/prompt_password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegistrar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextpass" />
+
+    <EditText
+        android:id="@+id/editTextNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="66dp"
+        android:layout_marginBottom="45dp"
+        android:ems="10"
+        android:hint="@string/nombre"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editTextAp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextDni"
+        app:layout_constraintStart_toStartOf="@+id/editTextDni"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextAp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="33dp"
+        android:ems="10"
+        android:hint="@string/apellido"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editTextE_mail"
+        app:layout_constraintStart_toStartOf="@+id/editTextNombre"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNombre" />
+
+    <EditText
+        android:id="@+id/editTextE_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="43dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editTextDni"
+        app:layout_constraintStart_toStartOf="@+id/editTextAp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAp" />
+
+    <EditText
+        android:id="@+id/editTextDni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="36dp"
+        android:ems="10"
+        android:hint="Dni"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editTextpass"
+        app:layout_constraintEnd_toEndOf="@+id/editTextpass"
+        app:layout_constraintTop_toBottomOf="@+id/editTextE_mail" />
+
+    <EditText
+        android:id="@+id/editTextpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginBottom="24dp"
+        android:ems="10"
+        android:hint="@string/prompt_password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/editTextpass2"
+        app:layout_constraintStart_toStartOf="@+id/editTextpass2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDni" />
+
+    <Button
+        android:id="@+id/buttonRegistrar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="130dp"
+        android:text="@string/registrarse"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editTextpass"
+        app:layout_constraintStart_toStartOf="@+id/editTextpass"
+        app:layout_constraintTop_toBottomOf="@+id/editTextpass2" />
+</androidx.constraintlayout.widget.ConstraintLayout>

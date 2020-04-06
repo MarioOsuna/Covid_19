@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuActivity">
+
+    <Button
+        android:id="@+id/buttonPrevencion"
+        android:layout_width="266dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="72dp"
+        android:text="@string/medidas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonOff" />
+
+    <Button
+        android:id="@+id/buttonSintomas"
+        android:layout_width="266dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="72dp"
+        android:text="@string/sintomas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPrevencion" />
+
+    <Button
+        android:id="@+id/buttonMapa"
+        android:layout_width="266dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="72dp"
+        android:text="@string/mapa"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSintomas" />
+
+    <TextView
+        android:id="@+id/textViewNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="77dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/buttonOff"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonOff"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="57dp"
+        android:background="@android:drawable/ic_lock_power_off"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
