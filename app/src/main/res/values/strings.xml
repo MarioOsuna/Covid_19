@@ -4,7 +4,7 @@
     <string name="login">Inicio de sesión</string>
     <string name="email" translatable="false">Email</string>
     <string name="prompt_password">Contraseña</string>
-    <string name="registrarse">registrarse</string>
+    <string name="registrarse">Registrarse</string>
     <string name="nombre">Nombre</string>
     <string name="apellido">Apellidos</string>
     <string name="medidas">Medidas de prevención</string>
@@ -14,4 +14,21 @@
     <string name="tos">tos</string>
     <string name="Dificultad">Dificultad para respirar</string>
     <string name="Visité">Visité un país los últimos 14 días</string>
+    <string name="Dolor">Dolor de garganta</string>
+    <string name="facebook_app_id" translatable="false">220078085959152</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb220078085959152</string>
+    <string name="error">Error al iniciar sesión</string>
+    <string name="Cancelar">Inicio cancelado</string>
+    <string name="tlf">Teléfono</string>
+    <string name="titlo_prev">QUÉDATE EN CASA.SALVA VIDAS.</string>
+    <string name="subtitulo">Ayuda a frenar el coronavirus</string>
+    <string name="uno">QUÉDATE en casa lo máximo posible</string>
+    <string name="dos">MANTÉN el distanciamiento social</string>
+    <string name="tres">LÁVATE las manos con frecuencia</string>
+    <string name="cuatro">TOSE cubriéndote con el codo</string>
+    <string name="cinco">CONTACTA si tienes sintomas</string>
+    <string name="texto">Protéjase a sí mismo y a quienes lo rodean informándose y tomando las precauciones adecuadas. Siga los consejos de su organismo de salud pública local. Para evitar la propagación de la COVID-19: Lávese las manos con frecuencia. Use agua y jabón o un desinfectante de manos a base de alcohol. Manténgase a una distancia segura de cualquier persona que tosa o estornude. No se toque los ojos, la nariz o la boca. Cuando tosa o estornude, cúbrase la nariz y la boca con el codo flexionado o con un pañuelo. Quédese en casa si se siente mal. Si tiene fiebre, tos y dificultad para respirar, solicite atención médica. Llame con antelación. Siga las instrucciones de su organismo sanitario local. Evitar las visitas innecesarias a los centros de atención médica permite que los sistemas sanitarios funcionen con mayor eficacia, lo que redunda en su protección y en la de los demás.</string>
+    <string name="Informacion">Información general:</string>
+
+
 </resources>

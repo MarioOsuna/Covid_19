@@ -10,40 +10,48 @@
         android:id="@+id/buttonPrevencion"
         android:layout_width="266dp"
         android:layout_height="70dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="86dp"
         android:text="@string/medidas"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonOff" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNombre" />
 
     <Button
         android:id="@+id/buttonSintomas"
         android:layout_width="266dp"
         android:layout_height="70dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="86dp"
         android:text="@string/sintomas"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonPrevencion" />
 
     <Button
         android:id="@+id/buttonMapa"
         android:layout_width="266dp"
         android:layout_height="70dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="86dp"
         android:text="@string/mapa"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSintomas" />
 
     <TextView
         android:id="@+id/textViewNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="77dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="230dp"
         android:text="TextView"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonOff"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,10 +59,12 @@
         android:id="@+id/buttonOff"
         android:layout_width="49dp"
         android:layout_height="49dp"
-        android:layout_marginStart="71dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="9dp"
         android:background="@android:drawable/ic_lock_power_off"
         android:textSize="10sp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewNombre"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
