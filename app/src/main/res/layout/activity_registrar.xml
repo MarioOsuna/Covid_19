@@ -95,7 +95,9 @@
         android:layout_marginEnd="112dp"
         android:ems="10"
         android:hint="@string/tlf"
-        android:inputType="textPersonName"
+        android:inputType="number"
+        android:numeric="integer"
+        android:phoneNumber="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDni" />
 

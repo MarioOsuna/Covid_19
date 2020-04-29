@@ -8,13 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 
 public class MenuActivity extends AppCompatActivity {
     Button buttonOff, buttonOP1, buttonOP2, buttonOP3;
     TextView textView;
-    String emailGoogle,NombreGoogle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,12 @@ public class MenuActivity extends AppCompatActivity {
         buttonOP2 = findViewById(R.id.buttonSintomas);
         buttonOP3 = findViewById(R.id.buttonMapa);
         textView = findViewById(R.id.textViewNombre);
+
+        Bundle datos = this.getIntent().getExtras();
+
+        String email = datos.getString("email");
+
+        textView.setText(email);
 
         buttonOff.setOnClickListener(new View.OnClickListener() {
             @Override
