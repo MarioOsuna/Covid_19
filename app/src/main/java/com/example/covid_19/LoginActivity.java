@@ -42,6 +42,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 import org.json.JSONObject;
 
@@ -73,6 +75,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     ProgressDialog progressDialog = null;
     Boolean existe, correcto;
     String email;
+    public static Boolean iniciado = false;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -93,6 +97,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                /*.addApi(Drive.API)
+                .addScope(Drive.SCOPE_FILE)*/
                 .build();
 
         signInButton = (SignInButton) findViewById(R.id.signInButton);
@@ -101,8 +107,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                 startActivityForResult(i, SIGN_INT_CODE);
+                iniciado = true;
+
+
             }
         });
 
@@ -239,20 +249,28 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-      //  callbackManager.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SIGN_INT_CODE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
     }
 
+    //Inicio de sesión con google
     private void handleSignInResult(GoogleSignInResult result) {
+
         if (result.isSuccess()) {
-            Intent i = new Intent(LoginActivity.this, MenuActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            // Intent i = new Intent(LoginActivity.this, MenuActivity.class);
+            //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
            /* GoogleSignInAccount acct = result.getSignInAccount();
             acct.getEmail();*/
-            startActivity(i);
+            //startActivity(i);
+            GoogleSignInAccount acct = result.getSignInAccount();
+            email = acct.getEmail();
+
+            ComprobarDatos comprobarDatos = new ComprobarDatos();
+            comprobarDatos.execute(email);
+
         } else {
             Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
         }
@@ -275,7 +293,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private class ComprobarDatos extends AsyncTask<String, Void, Void> {
         String total = "";
         String mail = " ";
-        Boolean InicioFacebook = false;
+        Boolean Inicio = false;
+
 
         @Override
         protected void onPreExecute() {
@@ -289,51 +308,74 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             super.onPostExecute(aVoid);
             existe = false;
             correcto = false;
-            String[] lineas = total.split("\n");
-            for (String lin : lineas) {
-                String[] campos = lin.split(",");
+            try {
+                String[] lineas = total.split("\n");
+                for (String lin : lineas) {
+                    String[] campos = lin.split(",");
 
-                if (campos[0].toString().equals(editTextMail.getText().toString()) || campos[0].toString().equals(mail)) {
-                    mail = campos[0].toString();
-                    existe = true;
-                    System.out.println(campos[0]);
-                }
-                if (existe) {
-                    if (campos[5].toString().equals(editTextPass.getText().toString())) {
-                        correcto = true;
+                    if (campos[0].toString().equals(editTextMail.getText().toString()) || campos[0].toString().equals(mail)) {
+                        mail = campos[0].toString();
+                        existe = true;
                         System.out.println(campos[0]);
                     }
+                    if (existe) {
+                        if (campos[5].toString().equals(editTextPass.getText().toString())) {
+                            correcto = true;
+                            System.out.println(campos[0]);
+                        }
 
+                    }
+                    if (mail != " ") {
+                        Inicio = true;
+                    }
+                    // Toast.makeText(LoginActivity.this, "Valor de "+mail, Toast.LENGTH_SHORT).show();
+                    System.out.println("Existe: " + existe);
+                    System.out.println(campos[0]);
                 }
-                if (mail != " ") {
-                    InicioFacebook = true;
-                }
-                // Toast.makeText(LoginActivity.this, "Valor de "+mail, Toast.LENGTH_SHORT).show();
-                System.out.println("Existe: " + existe);
-                System.out.println(campos[0]);
-            }
 
-            if ((existe && correcto) || (InicioFacebook && existe)) {
+                if ((existe && correcto) || (Inicio && existe)) {
 
-                //Toast.makeText(LoginActivity.this, "Usuario ya está registrado", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this, "Usuario ya está registrado", Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(LoginActivity.this, MenuActivity.class);
-                i.putExtra("email", mail);
-                startActivity(i);
-            } else {
-                if (InicioFacebook) {
-                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
-                    dialogo1.setTitle("Inicio fallido");
-                    dialogo1.setMessage("La cuenta de facebook con la que intenta iniciar sesión no ha sido registrada");
-                    dialogo1.setCancelable(true);
-                    dialogo1.show();
+                    Intent i = new Intent(LoginActivity.this, MenuActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("email", mail);
+                    startActivity(i);
                 } else {
-                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
-                    dialogo1.setTitle("Error");
-                    dialogo1.setMessage("Email o contraseña no reconocidas, pruebe de nuevo o bien si no está registrado por favor registrese");
-                    dialogo1.setCancelable(true);
-                    dialogo1.show();
+                    if (Inicio) {
+                        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
+                        dialogo1.setTitle("Inicio fallido");
+                        dialogo1.setMessage("La cuenta de facebook o google con la que intenta iniciar sesión no ha sido registrada");
+                        dialogo1.setCancelable(true);
+                        dialogo1.show();
+                        if (iniciado) {
+                            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<com.google.android.gms.common.api.Status>() {
+                                @Override
+                                public void onResult(@NonNull com.google.android.gms.common.api.Status status) {
+                                    if (status.isSuccess()) {
+                                        iniciado = false;
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                        // LoginManager.getInstance().logOut();
+                    } else {
+                        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
+                        dialogo1.setTitle("Error");
+                        dialogo1.setMessage("Email o contraseña no reconocidas, pruebe de nuevo o bien si no está registrado por favor registrese");
+                        dialogo1.setCancelable(true);
+                        dialogo1.show();
+                    }
                 }
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
+                dialogo1.setTitle("Error");
+                dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+                dialogo1.setCancelable(true);
+                dialogo1.show();
             }
 
         }
@@ -373,6 +415,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
+                dialogo1.setTitle("Error");
+                dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+                dialogo1.setCancelable(true);
+                dialogo1.show();
+            } catch (RuntimeException r) {
+
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
+                dialogo1.setTitle("Error");
+                dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+                dialogo1.setCancelable(true);
+                dialogo1.show();
             }
 
             Log.i("CONEXION", total);
@@ -380,17 +434,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             return null;
         }
     }
-   /* private void handleSignInResult(GoogleSignInResult result) {
-        if (result.isSuccess()) {
-            //Usuario logueado --> Mostramos sus datos
-            GoogleSignInAccount acct = result.getSignInAccount();
-           // txtNombre.setText(acct.getDisplayName());
-           // txtEmail.setText(acct.getEmail());
-           // updateUI(true);
-        } else {
-            //Usuario no logueado --> Lo mostramos como "Desconectado"
-           // updateUI(false);
-        }
-    }*/
+
 
 }

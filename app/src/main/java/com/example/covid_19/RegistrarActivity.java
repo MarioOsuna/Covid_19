@@ -55,12 +55,13 @@ public class RegistrarActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!editTextName.getText().toString().equals(" ") && !editTextEmail.getText().toString().equals(" ") && !editTextAp.getText().toString().equals(" ")
-                        && !editTextDNI.getText().toString().equals(" ") && !editTextPass1.getText().toString().equals(" ") && !editTextPass2.getText().toString().equals(" ")
-                        && !editTextTlf.getText().toString().equals(" ")) {
+                if (!editTextName.getText().toString().equals("") && !editTextEmail.getText().toString().equals("") && !editTextAp.getText().toString().equals("")
+                        && !editTextDNI.getText().toString().equals("") && !editTextPass1.getText().toString().equals("") && !editTextPass2.getText().toString().equals("")
+                        && !editTextTlf.getText().toString().equals("")) {
 
                     if (editTextPass1.getText().toString().equals(editTextPass2.getText().toString())) {
-                        Toast.makeText(RegistrarActivity.this, " " + editTextTlf.getText().toString(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(RegistrarActivity.this, "Registrando", Toast.LENGTH_SHORT).show();
+
                         ComprobarDatos descargarCSV = new ComprobarDatos();
                         descargarCSV.execute(LISTADOUSU);
                         //Insertar(editTextEmail.getText().toString(),editTextDNI.getText().toString(),editTextName.getText().toString(),editTextAp.getText().toString(),Integer.parseInt(editTextTlf.getText().toString()),editTextPass1.getText().toString());
@@ -114,6 +115,13 @@ public class RegistrarActivity extends AppCompatActivity {
 
         } catch (MalformedURLException ex) {
         } catch (IOException e) {
+        }catch (RuntimeException a){
+            a.printStackTrace();
+            AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RegistrarActivity.this);
+            dialogo1.setTitle("Error");
+            dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+            dialogo1.setCancelable(true);
+            dialogo1.show();
         }
 
     }
@@ -155,7 +163,7 @@ public class RegistrarActivity extends AppCompatActivity {
                 Toast.makeText(RegistrarActivity.this, "Usuario registrado", Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(RegistrarActivity.this, MenuActivity.class);
-                i.putExtra("email",editTextEmail.getText().toString() );
+                i.putExtra("email", editTextEmail.getText().toString());
                 startActivity(i);
             } else {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RegistrarActivity.this);
@@ -201,6 +209,13 @@ public class RegistrarActivity extends AppCompatActivity {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RegistrarActivity.this);
+                dialogo1.setTitle("Error");
+                dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+                dialogo1.setCancelable(true);
+                dialogo1.show();
             }
 
             Log.i("CONEXION", total);

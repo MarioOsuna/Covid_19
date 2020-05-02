@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HospitalActivity">
+
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="421dp"
+        android:layout_height="659dp"
+        android:layout_marginTop="31dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Direccion"></com.google.android.gms.maps.MapView>
+
+    <TextView
+        android:id="@+id/Direccion"
+        android:layout_width="218dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="86dp"
+        android:background="#EFE5E5"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--
+    map:mapType="0" Specifies a change to the initial map type
+    map:zOrderOnTop="true"  Control whether the map view's surface is placed on top of its window
+    map:useVieLifecycle="true" When using a MapFragment, this flag specifies whether the lifecycle of the map should be tied to the fragment's view or the fragment itself
+    map:uiCompass="true" Enables or disables the compass
+    map:uiRotateGestures="true" Sets the preference for whether rotate gestures should be enabled or disabled
+    map:uiScrollGestures="true" Sets the preference for whether scroll gestures should be enabled or disabled
+    map:uiTiltGestures="true" Sets the preference for whether tilt gestures should be enabled or disabled
+    map:uiZoomGestures="true" Sets the preference for whether zoom gestures should be enabled or disabled
+    map:uiZoomControls="true" Enables or disables the zoom controls
+    map:liteMode="true" Specifies whether the map should be created in lite mode
+    map:uiMapToolbar="true" Specifies whether the mapToolbar should be enabled
+    map:ambientEnabled="true" Specifies whether ambient-mode styling should be enabled
+    map:cameraMinZoomPreference="0.0" Specifies a preferred lower bound for camera zoom
+    map:cameraMaxZoomPreference="1.0" Specifies a preferred upper bound for camera zoom -->
+    />
+</androidx.constraintlayout.widget.ConstraintLayout>
