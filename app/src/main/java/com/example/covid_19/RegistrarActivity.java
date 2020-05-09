@@ -67,12 +67,12 @@ public class RegistrarActivity extends AppCompatActivity {
                         //Insertar(editTextEmail.getText().toString(),editTextDNI.getText().toString(),editTextName.getText().toString(),editTextAp.getText().toString(),Integer.parseInt(editTextTlf.getText().toString()),editTextPass1.getText().toString());
 
                     } else {
-                        Toast.makeText(RegistrarActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistrarActivity.this, R.string.error_pass1, Toast.LENGTH_SHORT).show();
 
                     }
 
                 } else {
-                    Toast.makeText(RegistrarActivity.this, "Debe rellenar todos los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrarActivity.this, R.string.toast_campos, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -119,7 +119,7 @@ public class RegistrarActivity extends AppCompatActivity {
             a.printStackTrace();
             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RegistrarActivity.this);
             dialogo1.setTitle("Error");
-            dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+            dialogo1.setMessage(R.string.error_servidor);
             dialogo1.setCancelable(true);
             dialogo1.show();
         }
@@ -136,7 +136,7 @@ public class RegistrarActivity extends AppCompatActivity {
 
             progressDialog = new ProgressDialog(RegistrarActivity.this);
             progressDialog.setIndeterminate(true);
-            progressDialog.setTitle("Registrando usuario");
+            progressDialog.setTitle(R.string.Registrando_usuario);
             progressDialog.show();
         }
 
@@ -160,15 +160,15 @@ public class RegistrarActivity extends AppCompatActivity {
                 Insertar(editTextEmail.getText().toString(), editTextDNI.getText().toString(), editTextName.getText().toString(), editTextAp.getText().toString(), editTextTlf.getText().toString(), editTextPass1.getText().toString());
               /*  Insertar insertar = new Insertar();
                 insertar.execute("Insertando");*/
-                Toast.makeText(RegistrarActivity.this, "Usuario registrado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrarActivity.this, R.string.Usuario_registrado, Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(RegistrarActivity.this, MenuActivity.class);
                 i.putExtra("email", editTextEmail.getText().toString());
                 startActivity(i);
             } else {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RegistrarActivity.this);
-                dialogo1.setTitle("Usuario registrado");
-                dialogo1.setMessage("Ya existe un usuario con este email, por favor pruebe con otro correo");
+                dialogo1.setTitle(R.string.Usuario_registrado);
+                dialogo1.setMessage(R.string.mail_existente);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
             }
@@ -213,7 +213,7 @@ public class RegistrarActivity extends AppCompatActivity {
                 e.printStackTrace();
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RegistrarActivity.this);
                 dialogo1.setTitle("Error");
-                dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+                dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
             }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ED0404"
     tools:context=".HospitalActivity">
 
 
@@ -11,7 +12,9 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Volver"
+        android:background="@drawable/btn"
+        android:text="@string/volver"
+        android:textColor="@drawable/txt_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

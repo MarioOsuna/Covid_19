@@ -26,4 +26,15 @@
     <string name="cinco">CONTACT if you have symptoms</string>
     <string name="texto">Protect yourself and those around you by informing yourself and taking appropriate precautions. Follow the advice of your local public health agency. To prevent the spread of COVID-19: Wash your hands often. Use soap and water or an alcohol-based hand sanitizer. Keep a safe distance from anyone who coughs or sneezes. Do not touch your eyes, nose, or mouth. When you cough or sneeze, cover your nose and mouth with your elbow flexed or with a tissue. Stay home if you feel bad. If you have a fever, cough, and shortness of breath, seek medical attention. Call ahead. Follow the instructions of your local health agency. Avoiding unnecessary visits to healthcare facilities enables healthcare systems to function more effectively, resulting in your protection and that of others.</string>
     <string name="Informacion">General information:</string>
+    <string name="volver">Come back</string>
+    <string name="error_servidor">"Cannot connect to the server, please check your internet connection "</string>
+    <string name="toast_campos">"You must fill in all fields "</string>
+    <string name="toast_gps">"I don't have permission to use GPS "</string>
+    <string name="direccion_enfermo">"It is quite possible that you have the disease, please go to the indicated address. "</string>
+    <string name="Indicios_enfermedad">"Signs of the disease "</string>
+    <string name="error_pass1">"Passwords do not match "</string>
+    <string name="mail_existente">"There is already a user with this email, please try another email "</string>
+    <string name="Usuario_registrado">"Registered user "</string>
+    <string name="Registrando_usuario">"Registering user "</string>
+    <string name="No_enfermo">"You are not sick "</string>
 </resources>

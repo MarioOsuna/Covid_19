@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F4A9A9"
     tools:context=".MenuActivity">
 
     <Button
@@ -13,7 +14,9 @@
         android:layout_marginStart="59dp"
         android:layout_marginTop="37dp"
         android:layout_marginEnd="86dp"
+        android:background="@drawable/btn"
         android:text="@string/medidas"
+        android:textColor="@drawable/txt_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewNombre" />
@@ -25,6 +28,8 @@
         android:layout_marginStart="59dp"
         android:layout_marginTop="43dp"
         android:layout_marginEnd="86dp"
+        android:background="@drawable/btn"
+        android:textColor="@drawable/txt_btn"
         android:text="@string/sintomas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +42,8 @@
         android:layout_marginStart="59dp"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="86dp"
+        android:background="@drawable/btn"
+        android:textColor="@drawable/txt_btn"
         android:text="@string/mapa"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +57,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="50dp"
         android:gravity="center_horizontal"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonOff"

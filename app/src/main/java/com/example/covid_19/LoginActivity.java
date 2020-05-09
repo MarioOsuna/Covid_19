@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,8 +32,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -43,7 +42,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 
 import org.json.JSONObject;
 
@@ -51,9 +49,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Connection;
+import java.net.URLConnection;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private GoogleApiClient googleApiClient;
+    static String INSERTARUSUARIO = "insertarUsuariosPOST.php";
 
     private SignInButton signInButton;
     private int SIGN_INT_CODE = 777;
@@ -81,6 +82,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
@@ -116,8 +120,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-
-        loginButton.setReadPermissions(Arrays.asList("email"));
+    //Permisos para obtener el mail y nombre de facebook
+        loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -143,9 +147,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 if (!editTextPass.getText().toString().equals("") && !editTextMail.getText().toString().equals("")) {
                     ComprobarDatos comprobarDatos = new ComprobarDatos();
-                    comprobarDatos.execute(LISTADOUSU);
+                    comprobarDatos.execute(" ", " ", " ");
                 } else {
-                    Toast.makeText(LoginActivity.this, "Debe rellenar todos los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.toast_campos, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -163,9 +167,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onLocationChanged(Location location) {
 
-               /* textViewAltitud.setText("Altitud: " + location.getAltitude());
-                textViewLatitud.setText("Latitud: " + location.getLatitude());
-                textViewLongitud.setText("Longitud: " + location.getLongitude());*/
 
             }
 
@@ -200,14 +201,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 try {
 
                     //Profile clase que contiene las características báscias de la cuenta de facebook (No retorna email)
-                    Profile profileDefault = Profile.getCurrentProfile();
+                   // Profile profileDefault = Profile.getCurrentProfile();
                     //Librería usada para poder mostrar la foto de perfil de facebook con una transformación circular
-                    //   Picasso.with(MainActivity.this).load(profileDefault.getProfilePictureUri(100,100)).transform(new CircleTransform()).into(imageViewPhoto);
-                    // textViewEmail.setText(object.getString("email"));
+
                     email = object.getString("email");
-                    //Compruebo directamente el email aquí:
+
+                    //Compruebo el email aquí,pasandole el nombre y el apellido de la persona:
                     ComprobarDatos comprobarDatos = new ComprobarDatos();
-                    comprobarDatos.execute(email);
+                    comprobarDatos.execute(email, object.getString("first_name"), object.getString("last_name"));
 
                 } catch (Exception e) {
                     Log.e("E-MainActivity", "getFaceBook" + e.toString());
@@ -216,7 +217,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
         Bundle parameters = new Bundle();
         //solicitando el campo email
-        parameters.putString("fields", "email");
+        parameters.putString("fields", "first_name,last_name,email");
         request.setParameters(parameters);
         request.executeAsync();
 
@@ -241,7 +242,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             }
         } else {
-            Toast.makeText(this, "Debes concederme permiso para usar el GPS!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_gps, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -260,16 +261,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void handleSignInResult(GoogleSignInResult result) {
 
         if (result.isSuccess()) {
-            // Intent i = new Intent(LoginActivity.this, MenuActivity.class);
-            //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-           /* GoogleSignInAccount acct = result.getSignInAccount();
-            acct.getEmail();*/
-            //startActivity(i);
+
             GoogleSignInAccount acct = result.getSignInAccount();
             email = acct.getEmail();
 
+            //Paso el mail para comprobar si existe en la bd y le paso el nombre y apellido del usuario para que en caso de que no exista insertarlo
             ComprobarDatos comprobarDatos = new ComprobarDatos();
-            comprobarDatos.execute(email);
+            comprobarDatos.execute(email, acct.getGivenName(), acct.getFamilyName());
 
         } else {
             Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
@@ -280,7 +278,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(this, "Error de conexión!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error_servidor, Toast.LENGTH_SHORT).show();
         Log.e("GoogleSignIn", "OnConnectionFailed: " + connectionResult);
     }
 
@@ -293,6 +291,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private class ComprobarDatos extends AsyncTask<String, Void, Void> {
         String total = "";
         String mail = " ";
+        String nom = " ";
+        String Aps = " ";
         Boolean Inicio = false;
 
 
@@ -312,42 +312,51 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 String[] lineas = total.split("\n");
                 for (String lin : lineas) {
                     String[] campos = lin.split(",");
-
+                    //Se comprueba si algún correo de la tabla coincide con el correo introducido o bien si el mail obtenido del inicio con Google/Facebook coincide con alguno de la tabla
                     if (campos[0].toString().equals(editTextMail.getText().toString()) || campos[0].toString().equals(mail)) {
-                        mail = campos[0].toString();
+
                         existe = true;
-                        System.out.println(campos[0]);
+                        // System.out.println(campos[0]);
                     }
+                    //Si el correo existe se comprueba si la contraseña existe
                     if (existe) {
                         if (campos[5].toString().equals(editTextPass.getText().toString())) {
                             correcto = true;
-                            System.out.println(campos[0]);
+                            System.out.println(correcto);
                         }
 
                     }
-                    if (mail != " ") {
+                    //Mail solo está lleno si se inicia sesión con google/facebook, por lo que si está vacio no se ha seleccionado ninguna de estas dos opciones
+                    if (!mail.equals(" ")) {
                         Inicio = true;
                     }
                     // Toast.makeText(LoginActivity.this, "Valor de "+mail, Toast.LENGTH_SHORT).show();
                     System.out.println("Existe: " + existe);
+                    System.out.println("Contraseña: " + correcto);
+                    System.out.println("Iniciado con google/facebook: " + Inicio);
                     System.out.println(campos[0]);
                 }
-
+                //Si existe el mail introducido y la contraseña es correcta o bien si se ha iniciado sesión con facebook y el correo existe, lanzamos el menu
                 if ((existe && correcto) || (Inicio && existe)) {
-
-                    //Toast.makeText(LoginActivity.this, "Usuario ya está registrado", Toast.LENGTH_SHORT).show();
 
                     Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("email", mail);
                     startActivity(i);
                 } else {
+                    //Si no coincide, pero si se ha iniciado sesión con Facebook/Google se inserta los datos obtenidos de este en la tabla y lanza el menú
                     if (Inicio) {
-                        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
-                        dialogo1.setTitle("Inicio fallido");
-                        dialogo1.setMessage("La cuenta de facebook o google con la que intenta iniciar sesión no ha sido registrada");
-                        dialogo1.setCancelable(true);
-                        dialogo1.show();
+
+
+                        Insertar(mail, " ", nom, Aps, " ", PasswordGenerator.getPassword(
+                                PasswordGenerator.MINUSCULAS +
+                                        PasswordGenerator.MAYUSCULAS +
+                                        PasswordGenerator.ESPECIALES, 8));
+                        Intent i = new Intent(LoginActivity.this, MenuActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("email", mail);
+                        startActivity(i);
+
                         if (iniciado) {
                             Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<com.google.android.gms.common.api.Status>() {
                                 @Override
@@ -360,7 +369,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 }
                             });
                         }
-                        // LoginManager.getInstance().logOut();
+
+                        //Por el contrario si no coincide, el mail o la contraseña son erroneas
                     } else {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
                         dialogo1.setTitle("Error");
@@ -373,7 +383,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 e.printStackTrace();
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
                 dialogo1.setTitle("Error");
-                dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+                dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
             }
@@ -383,7 +393,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         @Override
         protected Void doInBackground(String... strings) {
             //String script = strings[0];
+            //Obtenemos los datos que se le pasan al hilo, si es un inicio normal se le pasarán datos vacios
             mail = strings[0];
+            nom = strings[1];
+            Aps = strings[2];
 
             URL url = null;
             HttpURLConnection httpURLConnection = null;
@@ -417,14 +430,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 e.printStackTrace();
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
                 dialogo1.setTitle("Error");
-                dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+                dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
             } catch (RuntimeException r) {
 
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
                 dialogo1.setTitle("Error");
-                dialogo1.setMessage("No se puede conectar con el servidor, porfavor compruebe su conexión a internet");
+                dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
             }
@@ -435,5 +448,90 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
+    //Método para insertar datos en la tabla de usuario si se inicia sesión con google/facebook y no está registrado
+    private void Insertar(String Mail, String Dni, String nombre, String ap, String movil, String pass) {
+        String script = null;
 
+        script = SERVIDOR + INSERTARUSUARIO;
+
+        String contenido = "";
+        try {
+            System.out.println(script);
+            URLConnection conexion = null;
+
+            conexion = new URL(script).openConnection();
+            //conexion.connect();
+            conexion.setDoOutput(true);
+
+            PrintStream ps = new PrintStream(conexion.getOutputStream());
+
+            ps.print("Mail=" + Mail);
+            ps.print("&Dni=" + Dni);
+            ps.print("&Nombre=" + nombre);
+            ps.print("&Apellidos=" + ap);
+            ps.print("&Movil=" + movil);
+            ps.print("&Pass=" + pass);
+
+            InputStream inputStream = conexion.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            String linea = "";
+
+            while ((linea = br.readLine()) != null) {
+                contenido += linea;
+            }
+
+
+            br.close();
+            Log.i("Contenido: ", contenido);
+
+
+        } catch (MalformedURLException ex) {
+        } catch (IOException e) {
+        } catch (RuntimeException a) {
+            a.printStackTrace();
+            AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
+            dialogo1.setTitle("Error");
+            dialogo1.setMessage(R.string.error_servidor);
+            dialogo1.setCancelable(true);
+            dialogo1.show();
+        }
+
+    }
+
+
+}
+
+//clase para generar una contraseña al azar a los usuarios que inician sesión con google/facebook, de manera que solo pueden entrar con una de estas opciones
+class PasswordGenerator {
+
+    public static String NUMEROS = "0123456789";
+
+    public static String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    public static String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
+
+    public static String ESPECIALES = "ñÑ";
+
+
+    public static String getPinNumber() {
+        return getPassword(NUMEROS, 4);
+    }
+
+    public static String getPassword() {
+        return getPassword(8);
+    }
+
+    public static String getPassword(int length) {
+        return getPassword(NUMEROS + MAYUSCULAS + MINUSCULAS, length);
+    }
+
+    public static String getPassword(String key, int length) {
+        String pswd = "";
+
+        for (int i = 0; i < length; i++) {
+            pswd += (key.charAt((int) (Math.random() * key.length())));
+        }
+
+        return pswd;
+    }
 }

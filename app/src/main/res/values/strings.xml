@@ -29,7 +29,19 @@
     <string name="cinco">CONTACTA si tienes sintomas</string>
     <string name="texto">Protéjase a sí mismo y a quienes lo rodean informándose y tomando las precauciones adecuadas. Siga los consejos de su organismo de salud pública local. Para evitar la propagación de la COVID-19: Lávese las manos con frecuencia. Use agua y jabón o un desinfectante de manos a base de alcohol. Manténgase a una distancia segura de cualquier persona que tosa o estornude. No se toque los ojos, la nariz o la boca. Cuando tosa o estornude, cúbrase la nariz y la boca con el codo flexionado o con un pañuelo. Quédese en casa si se siente mal. Si tiene fiebre, tos y dificultad para respirar, solicite atención médica. Llame con antelación. Siga las instrucciones de su organismo sanitario local. Evitar las visitas innecesarias a los centros de atención médica permite que los sistemas sanitarios funcionen con mayor eficacia, lo que redunda en su protección y en la de los demás.</string>
     <string name="Informacion">Información general:</string>
-    <string name="title_activity_hospital">Map</string>
+    <string name="title_activity_hospital" translatable="false">Map</string>
+    <string name="title_activity_mapa_casos" translatable="false">Map</string>
+    <string name="volver">volver</string>
+    <string name="error_servidor">No se puede conectar con el servidor, porfavor compruebe su conexión a internet</string>
+    <string name="toast_campos">Debe rellenar todos los campos</string>
+    <string name="toast_gps">No tengo permiso para usar el GPS</string>
+    <string name="Indicios_enfermedad">Indicios de la enfermedad</string>
+    <string name="direccion_enfermo">Es bastante posible que tenga la enfermedad, por favor dirijase a la dirección indicada.</string>
+    <string name="error_pass1">Las contraseñas no coinciden</string>
+    <string name="Registrando_usuario">Registrando usuario</string>
+    <string name="Usuario_registrado">Usuario registrado</string>
+    <string name="mail_existente">Ya existe un usuario con este email, por favor pruebe con otro correo</string>
+    <string name="No_enfermo">No estás enfermo</string>
 
 
 </resources>

@@ -3,8 +3,11 @@ package com.example.covid_19;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,11 +22,21 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MenuActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     Button buttonOff, buttonOP1, buttonOP2, buttonOP3;
     TextView textView;
     private GoogleApiClient googleApiClient;
-   public static String EMAIL_INICIADO;
+    public static String EMAIL_INICIADO;
+
+    static String SERVIDOR = "http://tfgcovid19.000webhostapp.com/";
+    static String LISTADOENFERMOS = "listadoCSVEnfermo.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +59,17 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
         Bundle datos = this.getIntent().getExtras();
 
         String email = datos.getString("email");
-        EMAIL_INICIADO=email;
+        EMAIL_INICIADO = email;
 
         textView.setText(email);
 
         buttonOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             /*  Intent i=new Intent(MenuActivity.this, LoginActivity.class);
-                startActivity(i);*/
+
                 LoginManager.getInstance().logOut();
 
-                if (LoginActivity.iniciado) {
+               if (LoginActivity.iniciado) {
                     Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
                         @Override
                         public void onResult(@NonNull com.google.android.gms.common.api.Status status) {
@@ -83,14 +95,18 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
         buttonOP2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MenuActivity.this, TestActivity.class);
-                startActivity(i);
+
+                  ListarEnfermos listarEnfermos=new ListarEnfermos();
+                  listarEnfermos.execute();
+
+
+
             }
         });
         buttonOP3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MenuActivity.this, MapsActivity.class);
+                Intent i = new Intent(MenuActivity.this, MapaCasosActivity.class);
                 startActivity(i);
             }
         });
@@ -100,5 +116,110 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    private class ListarEnfermos extends AsyncTask<String, Void, Void> {
+        String total = "";
+        String mail = " ";
+        Boolean existe = false;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            existe = false;
+
+            try {
+                String[] lineas = total.split("\n");
+                for (String lin : lineas) {
+                    String[] campos = lin.split(",");
+
+                    if (campos[0].toString().equals(EMAIL_INICIADO)) {
+
+                        existe = true;
+
+                    }
+
+                }
+                if(existe){
+                    Intent i = new Intent(MenuActivity.this, HospitalActivity.class);
+                    startActivity(i);
+                }else{
+                    Intent i = new Intent(MenuActivity.this, TestActivity.class);
+                    startActivity(i);
+                }
+
+
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MenuActivity.this);
+                dialogo1.setTitle("Error");
+                dialogo1.setMessage(R.string.error_servidor);
+                dialogo1.setCancelable(true);
+                dialogo1.show();
+            }
+
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            //String script = strings[0];
+            //mail = strings[0];
+
+            URL url = null;
+            HttpURLConnection httpURLConnection = null;
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                url = new URL(SERVIDOR + LISTADOENFERMOS);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.connect();
+
+                if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
+                    String linea = "";
+
+                    while ((linea = br.readLine()) != null) {
+                        total += linea + "\n";
+                    }
+
+                    br.close();
+                    inputStream.close();
+
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MenuActivity.this);
+                dialogo1.setTitle("Error");
+                dialogo1.setMessage(R.string.error_servidor);
+                dialogo1.setCancelable(true);
+                dialogo1.show();
+            } catch (RuntimeException r) {
+
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MenuActivity.this);
+                dialogo1.setTitle("Error");
+                dialogo1.setMessage(R.string.error_servidor);
+                dialogo1.setCancelable(true);
+                dialogo1.show();
+            }
+
+            Log.i("CONEXION", total);
+
+            return null;
+        }
     }
 }

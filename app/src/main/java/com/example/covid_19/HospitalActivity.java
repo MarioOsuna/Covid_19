@@ -32,9 +32,9 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
         direccion.setText("Paraje Cerro del Camello, s/n, 14200 Peñarroya-Pueblonuevo, Córdoba");
         mMapView.getMapAsync(this);
         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(HospitalActivity.this);
-        dialogo1.setTitle("Indicios de la enfermedad");
+        dialogo1.setTitle(R.string.Indicios_enfermedad);
         dialogo1.setIcon(R.drawable.advertencia);
-        dialogo1.setMessage("Es bastante posible que tenga la enfermedad, por favor dirijase a la dirección indicada.");
+        dialogo1.setMessage(R.string.direccion_enfermo);
         dialogo1.setCancelable(true);
         dialogo1.show();
         button.setOnClickListener(new View.OnClickListener() {
