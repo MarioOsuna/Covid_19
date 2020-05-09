@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#BAEFBD"
     tools:context=".TestActivity">
 
     <CheckBox
@@ -11,12 +12,12 @@
         android:layout_width="242dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="94dp"
-        android:layout_marginTop="97dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="75dp"
         android:text="@string/fiebre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
         android:id="@+id/checkBox2"
@@ -67,14 +68,46 @@
         app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
 
     <Button
+        android:id="@+id/button4"
+        android:layout_width="122dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="69dp"
+        android:background="@drawable/btn"
+        android:text="@string/volver"
+        android:textColor="@drawable/txt_btn"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
+
+    <Button
         android:id="@+id/button"
         android:layout_width="122dp"
         android:layout_height="49dp"
-        android:layout_marginStart="144dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="69dp"
-        android:layout_marginEnd="145dp"
+        android:layout_marginEnd="75dp"
+        android:background="@drawable/btn"
         android:text="Test"
+        android:textColor="@drawable/txt_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="288dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="70dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center_horizontal"
+        android:text="Test"
+        android:textColor="#9C1313"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

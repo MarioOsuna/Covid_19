@@ -40,7 +40,7 @@ import java.net.URLConnection;
 
 public class TestActivity extends AppCompatActivity {
     CheckBox checkBox, checkBox1, checkBox2, checkBox3, checkBox4;
-    Button button;
+    Button button,button2;
     static String SERVIDOR = "http://tfgcovid19.000webhostapp.com/";
     static String INSERTARENFERMO = "insertarEnfermosPOST.php";
     static String LISTARUSUARIO = "listadoCSVUsuario.php";
@@ -58,7 +58,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
+        button2=findViewById(R.id.button4);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -79,7 +79,14 @@ public class TestActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
         //locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
 
-
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TestActivity.this, MenuActivity.class);
+                i.putExtra("email", MenuActivity.EMAIL_INICIADO);
+                startActivity(i);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

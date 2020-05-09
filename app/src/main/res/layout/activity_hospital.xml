@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ED0404"
+    android:background="#F1EEEE"
     tools:context=".HospitalActivity">
 
 
@@ -12,8 +12,7 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn"
-        android:text="@string/volver"
+        android:background="@android:drawable/ic_menu_revert"
         android:textColor="@drawable/txt_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

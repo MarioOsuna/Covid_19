@@ -7,12 +7,25 @@
     android:background="#F4A9A9"
     tools:context=".LoginActivity">
 
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="88dp"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
         android:layout_width="189dp"
         android:layout_height="37dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="111dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
@@ -20,44 +33,20 @@
         android:id="@+id/loginButton"
         android:layout_width="190dp"
         android:layout_height="24dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="109dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="96dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="99dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="99dp"
-        android:ems="10"
-        android:hint="@string/prompt_password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="193dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="109dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="96dp"
         android:background="@drawable/btn"
-        android:textColor="@drawable/txt_btn"
         android:text="@string/login"
+        android:textColor="@drawable/txt_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPass" />
 
@@ -65,8 +54,8 @@
         android:id="@+id/textView"
         android:layout_width="193dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="109dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="96dp"
         android:text="OR"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,8 +65,8 @@
         android:id="@+id/textViewRegistrar"
         android:layout_width="193dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="109dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="96dp"
         android:clickable="true"
         android:text="@string/registrarse"
         android:textAlignment="center"
@@ -86,4 +75,18 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInButton" />
+
+    <EditText
+        android:id="@+id/editTextPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="88dp"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="@string/pass"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

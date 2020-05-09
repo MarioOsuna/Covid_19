@@ -1,17 +1,12 @@
 package com.example.covid_19;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,6 +20,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -120,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-    //Permisos para obtener el mail y nombre de facebook
+        //Permisos para obtener el mail y nombre de facebook
         loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -149,6 +150,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     ComprobarDatos comprobarDatos = new ComprobarDatos();
                     comprobarDatos.execute(" ", " ", " ");
                 } else {
+                    editTextMail.setHintTextColor(Color.rgb(203, 67, 53));
+                    editTextPass.setHintTextColor(Color.rgb(203, 67, 53));
                     Toast.makeText(LoginActivity.this, R.string.toast_campos, Toast.LENGTH_SHORT).show();
                 }
 
@@ -201,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 try {
 
                     //Profile clase que contiene las características báscias de la cuenta de facebook (No retorna email)
-                   // Profile profileDefault = Profile.getCurrentProfile();
+                    // Profile profileDefault = Profile.getCurrentProfile();
                     //Librería usada para poder mostrar la foto de perfil de facebook con una transformación circular
 
                     email = object.getString("email");
@@ -293,6 +296,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String mail = " ";
         String nom = " ";
         String Aps = " ";
+        String mailCampos = "";
         Boolean Inicio = false;
 
 
@@ -314,7 +318,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     String[] campos = lin.split(",");
                     //Se comprueba si algún correo de la tabla coincide con el correo introducido o bien si el mail obtenido del inicio con Google/Facebook coincide con alguno de la tabla
                     if (campos[0].toString().equals(editTextMail.getText().toString()) || campos[0].toString().equals(mail)) {
-
+                        mailCampos = campos[0].toString();
                         existe = true;
                         // System.out.println(campos[0]);
                     }
@@ -336,6 +340,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     System.out.println("Iniciado con google/facebook: " + Inicio);
                     System.out.println(campos[0]);
                 }
+                System.out.println("mail " + mail);
+                System.out.println("mailCampos " + mailCampos);
+
+                if (!mailCampos.equals("")) {
+                    mail = mailCampos;
+                }
+
+                System.out.println("2 mail " + mail);
                 //Si existe el mail introducido y la contraseña es correcta o bien si se ha iniciado sesión con facebook y el correo existe, lanzamos el menu
                 if ((existe && correcto) || (Inicio && existe)) {
 
@@ -374,7 +386,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     } else {
                         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
                         dialogo1.setTitle("Error");
-                        dialogo1.setMessage("Email o contraseña no reconocidas, pruebe de nuevo o bien si no está registrado por favor registrese");
+                        dialogo1.setMessage(R.string.NoReconocido);
                         dialogo1.setCancelable(true);
                         dialogo1.show();
                     }
@@ -405,6 +417,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
+                dialogo1.setTitle("Error");
+                dialogo1.setMessage(R.string.error_servidor);
+                dialogo1.setCancelable(true);
+                dialogo1.show();
             }
             try {
                 url = new URL(SERVIDOR + LISTADOUSU);
@@ -426,20 +443,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
                 }
-            } catch (IOException e) {
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
-                dialogo1.setTitle("Error");
-                dialogo1.setMessage(R.string.error_servidor);
-                dialogo1.setCancelable(true);
-                dialogo1.show();
-            } catch (RuntimeException r) {
+                AlertDialog.Builder dialogo2 = new AlertDialog.Builder(LoginActivity.this);
+                dialogo2.setTitle("Error");
+                dialogo2.setMessage(R.string.error_servidor);
+                dialogo2.setCancelable(true);
+                dialogo2.show();
+                throw new RuntimeException(e);
+            } catch (IOException e) {
 
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
-                dialogo1.setTitle("Error");
-                dialogo1.setMessage(R.string.error_servidor);
-                dialogo1.setCancelable(true);
-                dialogo1.show();
             }
 
             Log.i("CONEXION", total);

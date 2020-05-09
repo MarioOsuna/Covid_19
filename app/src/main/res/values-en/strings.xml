@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_activity_maps">Map</string>
-    <string name="prompt_password">Password</string>
+    <string name="prompt_password">Password (8 characters)</string>
     <string name="login">Login</string>
     <string name="registrarse">Sign up</string>
     <string name="nombre">Name</string>
@@ -28,7 +28,7 @@
     <string name="Informacion">General information:</string>
     <string name="volver">Come back</string>
     <string name="error_servidor">"Cannot connect to the server, please check your internet connection "</string>
-    <string name="toast_campos">"You must fill in all fields "</string>
+    <string name="toast_campos">"You must fill in the indicated fields "</string>
     <string name="toast_gps">"I don't have permission to use GPS "</string>
     <string name="direccion_enfermo">"It is quite possible that you have the disease, please go to the indicated address. "</string>
     <string name="Indicios_enfermedad">"Signs of the disease "</string>
@@ -37,4 +37,10 @@
     <string name="Usuario_registrado">"Registered user "</string>
     <string name="Registrando_usuario">"Registering user "</string>
     <string name="No_enfermo">"You are not sick "</string>
+    <string name="cero_casos">"There are no cases registered in the app "</string>
+    <string name="requerido">* (Required fields)</string>
+    <string name="pass">Contraseña</string>
+    <string name="toast_caracteres">"Password must be a minimum of 8 characters "</string>
+    <string name="toast_NoMail">"Invalid mail "</string>
+    <string name="NoReconocido">Email or password not recognized, try again or if you are not registered please register</string>
 </resources>

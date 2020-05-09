@@ -96,8 +96,8 @@ public class MapaCasosActivity extends FragmentActivity implements OnMapReadyCal
             } catch (RuntimeException e) {
                 e.printStackTrace();
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MapaCasosActivity.this);
-                dialogo1.setTitle("Error");
-                dialogo1.setMessage(R.string.error_servidor);
+                dialogo1.setTitle("Covid 19");
+                dialogo1.setMessage(R.string.cero_casos);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
             }
@@ -140,8 +140,8 @@ public class MapaCasosActivity extends FragmentActivity implements OnMapReadyCal
             } catch (IOException e) {
                 e.printStackTrace();
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MapaCasosActivity.this);
-                dialogo1.setTitle("Error");
-                dialogo1.setMessage(R.string.error_servidor);
+                dialogo1.setTitle("0 casos");
+                dialogo1.setMessage("No se ha encontrado ningún caso registrado en la app");
                 dialogo1.setCancelable(true);
                 dialogo1.show();
             } catch (RuntimeException r) {

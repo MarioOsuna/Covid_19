@@ -10,6 +10,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#F4EEB2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,15 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="118dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/btn"
-                android:text="@string/volver"
-                android:textColor="@drawable/txt_btn" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -148,6 +140,14 @@
                 android:text="@string/texto"
                 android:textColor="#0E0B0B"
                 android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="118dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn"
+                android:text="@string/volver"
+                android:textColor="@drawable/txt_btn" />
 
         </LinearLayout>
     </ScrollView>

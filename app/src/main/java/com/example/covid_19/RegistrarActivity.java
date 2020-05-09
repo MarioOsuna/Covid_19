@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -56,22 +57,50 @@ public class RegistrarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!editTextName.getText().toString().equals("") && !editTextEmail.getText().toString().equals("") && !editTextAp.getText().toString().equals("")
-                        && !editTextDNI.getText().toString().equals("") && !editTextPass1.getText().toString().equals("") && !editTextPass2.getText().toString().equals("")
-                        && !editTextTlf.getText().toString().equals("")) {
+                        && !editTextPass1.getText().toString().equals("") && !editTextPass2.getText().toString().equals("")
+                ) {
 
-                    if (editTextPass1.getText().toString().equals(editTextPass2.getText().toString())) {
-                        // Toast.makeText(RegistrarActivity.this, "Registrando", Toast.LENGTH_SHORT).show();
+                    if (!editTextEmail.getText().toString().contains("@")) {
+                        editTextEmail.setText("");
+                        editTextEmail.setHintTextColor(Color.rgb(203, 67, 53));
 
-                        ComprobarDatos descargarCSV = new ComprobarDatos();
-                        descargarCSV.execute(LISTADOUSU);
-                        //Insertar(editTextEmail.getText().toString(),editTextDNI.getText().toString(),editTextName.getText().toString(),editTextAp.getText().toString(),Integer.parseInt(editTextTlf.getText().toString()),editTextPass1.getText().toString());
+                        Toast.makeText(RegistrarActivity.this, R.string.toast_NoMail, Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(RegistrarActivity.this, R.string.error_pass1, Toast.LENGTH_SHORT).show();
+                        if (editTextPass1.getText().toString().length() < 8) {
 
+                            editTextPass1.setTextColor(Color.rgb(203, 67, 53));
+
+                          //  editTextPass2.setHintTextColor(Color.rgb(203, 67, 53));
+
+                            Toast.makeText(RegistrarActivity.this, R.string.toast_caracteres, Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            if (editTextPass1.getText().toString().equals(editTextPass2.getText().toString())) {
+                                // Toast.makeText(RegistrarActivity.this, "Registrando", Toast.LENGTH_SHORT).show();
+
+                                ComprobarDatos descargarCSV = new ComprobarDatos();
+                                descargarCSV.execute(LISTADOUSU);
+                                //Insertar(editTextEmail.getText().toString(),editTextDNI.getText().toString(),editTextName.getText().toString(),editTextAp.getText().toString(),Integer.parseInt(editTextTlf.getText().toString()),editTextPass1.getText().toString());
+
+                            } else {
+                                editTextPass1.setHintTextColor(Color.rgb(203, 67, 53));
+
+                                editTextPass2.setHintTextColor(Color.rgb(203, 67, 53));
+                                Toast.makeText(RegistrarActivity.this, R.string.error_pass1, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
                     }
 
+
                 } else {
+                    editTextEmail.setHintTextColor(Color.rgb(203, 67, 53));
+                    editTextPass1.setHintTextColor(Color.rgb(203, 67, 53));
+                    editTextName.setHintTextColor(Color.rgb(203, 67, 53));
+                    editTextPass2.setHintTextColor(Color.rgb(203, 67, 53));
+                    editTextAp.setHintTextColor(Color.rgb(203, 67, 53));
+
                     Toast.makeText(RegistrarActivity.this, R.string.toast_campos, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -115,7 +144,7 @@ public class RegistrarActivity extends AppCompatActivity {
 
         } catch (MalformedURLException ex) {
         } catch (IOException e) {
-        }catch (RuntimeException a){
+        } catch (RuntimeException a) {
             a.printStackTrace();
             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RegistrarActivity.this);
             dialogo1.setTitle("Error");
