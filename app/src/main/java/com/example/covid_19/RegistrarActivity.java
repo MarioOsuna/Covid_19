@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -56,52 +59,61 @@ public class RegistrarActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!editTextName.getText().toString().equals("") && !editTextEmail.getText().toString().equals("") && !editTextAp.getText().toString().equals("")
-                        && !editTextPass1.getText().toString().equals("") && !editTextPass2.getText().toString().equals("")
-                ) {
 
-                    if (!editTextEmail.getText().toString().contains("@")) {
-                        editTextEmail.setText("");
-                        editTextEmail.setHintTextColor(Color.rgb(203, 67, 53));
+                if (conexion()) {
+                    if (!editTextName.getText().toString().equals("") && !editTextEmail.getText().toString().equals("") && !editTextAp.getText().toString().equals("")
+                            && !editTextPass1.getText().toString().equals("") && !editTextPass2.getText().toString().equals("")
+                    ) {
 
-                        Toast.makeText(RegistrarActivity.this, R.string.toast_NoMail, Toast.LENGTH_SHORT).show();
+                        if (!editTextEmail.getText().toString().contains("@")) {
+                            editTextEmail.setText("");
+                            editTextEmail.setHintTextColor(Color.rgb(203, 67, 53));
 
-                    } else {
-                        if (editTextPass1.getText().toString().length() < 8) {
-
-                            editTextPass1.setTextColor(Color.rgb(203, 67, 53));
-
-                          //  editTextPass2.setHintTextColor(Color.rgb(203, 67, 53));
-
-                            Toast.makeText(RegistrarActivity.this, R.string.toast_caracteres, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrarActivity.this, R.string.toast_NoMail, Toast.LENGTH_SHORT).show();
 
                         } else {
-                            if (editTextPass1.getText().toString().equals(editTextPass2.getText().toString())) {
-                                // Toast.makeText(RegistrarActivity.this, "Registrando", Toast.LENGTH_SHORT).show();
+                            if (editTextPass1.getText().toString().length() < 8) {
 
-                                ComprobarDatos descargarCSV = new ComprobarDatos();
-                                descargarCSV.execute(LISTADOUSU);
-                                //Insertar(editTextEmail.getText().toString(),editTextDNI.getText().toString(),editTextName.getText().toString(),editTextAp.getText().toString(),Integer.parseInt(editTextTlf.getText().toString()),editTextPass1.getText().toString());
+                                editTextPass1.setTextColor(Color.rgb(203, 67, 53));
+
+                                //  editTextPass2.setHintTextColor(Color.rgb(203, 67, 53));
+
+                                Toast.makeText(RegistrarActivity.this, R.string.toast_caracteres, Toast.LENGTH_SHORT).show();
 
                             } else {
-                                editTextPass1.setHintTextColor(Color.rgb(203, 67, 53));
+                                if (editTextPass1.getText().toString().equals(editTextPass2.getText().toString())) {
+                                    // Toast.makeText(RegistrarActivity.this, "Registrando", Toast.LENGTH_SHORT).show();
 
-                                editTextPass2.setHintTextColor(Color.rgb(203, 67, 53));
-                                Toast.makeText(RegistrarActivity.this, R.string.error_pass1, Toast.LENGTH_SHORT).show();
+                                    ComprobarDatos descargarCSV = new ComprobarDatos();
+                                    descargarCSV.execute(LISTADOUSU);
+                                    //Insertar(editTextEmail.getText().toString(),editTextDNI.getText().toString(),editTextName.getText().toString(),editTextAp.getText().toString(),Integer.parseInt(editTextTlf.getText().toString()),editTextPass1.getText().toString());
 
+                                } else {
+                                    editTextPass1.setHintTextColor(Color.rgb(203, 67, 53));
+
+                                    editTextPass2.setHintTextColor(Color.rgb(203, 67, 53));
+                                    Toast.makeText(RegistrarActivity.this, R.string.error_pass1, Toast.LENGTH_SHORT).show();
+
+                                }
                             }
                         }
+
+
+                    } else {
+                        editTextEmail.setHintTextColor(Color.rgb(203, 67, 53));
+                        editTextPass1.setHintTextColor(Color.rgb(203, 67, 53));
+                        editTextName.setHintTextColor(Color.rgb(203, 67, 53));
+                        editTextPass2.setHintTextColor(Color.rgb(203, 67, 53));
+                        editTextAp.setHintTextColor(Color.rgb(203, 67, 53));
+
+                        Toast.makeText(RegistrarActivity.this, R.string.toast_campos, Toast.LENGTH_SHORT).show();
                     }
-
-
-                } else {
-                    editTextEmail.setHintTextColor(Color.rgb(203, 67, 53));
-                    editTextPass1.setHintTextColor(Color.rgb(203, 67, 53));
-                    editTextName.setHintTextColor(Color.rgb(203, 67, 53));
-                    editTextPass2.setHintTextColor(Color.rgb(203, 67, 53));
-                    editTextAp.setHintTextColor(Color.rgb(203, 67, 53));
-
-                    Toast.makeText(RegistrarActivity.this, R.string.toast_campos, Toast.LENGTH_SHORT).show();
+                }else{
+                    AlertDialog.Builder dialogo2 = new AlertDialog.Builder(RegistrarActivity.this);
+                    dialogo2.setTitle("Error");
+                    dialogo2.setMessage(R.string.error_servidor);
+                    dialogo2.setCancelable(true);
+                    dialogo2.show();
                 }
             }
         });
@@ -250,6 +262,17 @@ public class RegistrarActivity extends AppCompatActivity {
             Log.i("CONEXION", total);
 
             return null;
+        }
+    }
+
+    public boolean conexion() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
         }
     }
 

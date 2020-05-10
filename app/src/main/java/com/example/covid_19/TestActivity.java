@@ -16,6 +16,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,7 +42,7 @@ import java.net.URLConnection;
 
 public class TestActivity extends AppCompatActivity {
     CheckBox checkBox, checkBox1, checkBox2, checkBox3, checkBox4;
-    Button button,button2;
+    Button button, button2;
     static String SERVIDOR = "http://tfgcovid19.000webhostapp.com/";
     static String INSERTARENFERMO = "insertarEnfermosPOST.php";
     static String LISTARUSUARIO = "listadoCSVUsuario.php";
@@ -58,7 +60,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        button2=findViewById(R.id.button4);
+        button2 = findViewById(R.id.button4);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -90,28 +92,44 @@ public class TestActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (conexion()) {
+                    if (checkIfLocationOpened()) {
 
-                if (checkBox1.isChecked() && checkBox.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
+                        if (checkBox1.isChecked() && checkBox.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
 
-                    ComprobarUsuario comprobarUsuario = new ComprobarUsuario();
-                    comprobarUsuario.execute(Latitud, Longitud);
+                            ComprobarUsuario comprobarUsuario = new ComprobarUsuario();
+                            comprobarUsuario.execute(Latitud, Longitud);
 
-                    Intent i = new Intent(TestActivity.this, HospitalActivity.class);
-                    startActivity(i);
-                    //Toast.makeText(TestActivity.this, "Latitud: " + Latitud + " Longitud: " + Longitud, Toast.LENGTH_SHORT).show();
-                    Log.i("Coordenadas", "Latitud: " + Latitud + " Longitud: " + Longitud);
-                } else {
-                    if (checkBox1.isChecked() && checkBox4.isChecked()) {
-                        //   Toast.makeText(TestActivity.this, "Estás enfermo", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(TestActivity.this, HospitalActivity.class);
+                            startActivity(i);
+                            //Toast.makeText(TestActivity.this, "Latitud: " + Latitud + " Longitud: " + Longitud, Toast.LENGTH_SHORT).show();
+                            Log.i("Coordenadas", "Latitud: " + Latitud + " Longitud: " + Longitud);
+                        } else {
+                            if (checkBox1.isChecked() && checkBox4.isChecked()) {
+                                //   Toast.makeText(TestActivity.this, "Estás enfermo", Toast.LENGTH_SHORT).show();
 
-                        ComprobarUsuario comprobarUsuario = new ComprobarUsuario();
-                        comprobarUsuario.execute(Latitud, Longitud);
+                                ComprobarUsuario comprobarUsuario = new ComprobarUsuario();
+                                comprobarUsuario.execute(Latitud, Longitud);
 
-                        Intent i = new Intent(TestActivity.this, HospitalActivity.class);
-                        startActivity(i);
-                    } else {
-                        Toast.makeText(TestActivity.this, R.string.No_enfermo, Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(TestActivity.this, HospitalActivity.class);
+                                startActivity(i);
+                            } else {
+                                Toast.makeText(TestActivity.this, R.string.No_enfermo, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }else{
+                        AlertDialog.Builder dialogo2 = new AlertDialog.Builder(TestActivity.this);
+                        dialogo2.setTitle("Error");
+                        dialogo2.setMessage(R.string.ubicación);
+                        dialogo2.setCancelable(true);
+                        dialogo2.show();
                     }
+                } else {
+                    AlertDialog.Builder dialogo2 = new AlertDialog.Builder(TestActivity.this);
+                    dialogo2.setTitle("Error");
+                    dialogo2.setMessage(R.string.error_servidor);
+                    dialogo2.setCancelable(true);
+                    dialogo2.show();
                 }
 
             }
@@ -120,6 +138,25 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
+    private boolean checkIfLocationOpened() {
+        String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        System.out.println("Provider contains=> " + provider);
+        if (provider.contains("gps") || provider.contains("network")) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean conexion() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     //Obtener los datos de la tabla usuario e introducirlos en la tabla enfermo

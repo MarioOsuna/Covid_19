@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4A9A9"
+    android:background="#ffe7ad"
     tools:context=".MenuActivity">
 
     <Button
@@ -29,8 +29,8 @@
         android:layout_marginTop="43dp"
         android:layout_marginEnd="86dp"
         android:background="@drawable/btn"
-        android:textColor="@drawable/txt_btn"
         android:text="@string/sintomas"
+        android:textColor="@drawable/txt_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonPrevencion" />
@@ -43,8 +43,8 @@
         android:layout_marginTop="44dp"
         android:layout_marginEnd="86dp"
         android:background="@drawable/btn"
-        android:textColor="@drawable/txt_btn"
         android:text="@string/mapa"
+        android:textColor="@drawable/txt_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSintomas" />
@@ -58,7 +58,7 @@
         android:layout_marginEnd="50dp"
         android:gravity="center_horizontal"
         android:text="Correo"
-        android:textColor="#000000"
+        android:textColor="#d35656"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonOff"

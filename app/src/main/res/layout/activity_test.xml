@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#BAEFBD"
+    android:background="#ffe7ad"
     tools:context=".TestActivity">
 
     <CheckBox
@@ -104,7 +104,7 @@
         android:fontFamily="sans-serif-smallcaps"
         android:gravity="center_horizontal"
         android:text="Test"
-        android:textColor="#9C1313"
+        android:textColor="#d35656"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

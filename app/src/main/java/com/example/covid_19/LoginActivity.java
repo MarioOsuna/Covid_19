@@ -4,12 +4,15 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -145,14 +148,23 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         buttonInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //compruebo si hay conexión a internet
+                if (conexion()) {
 
-                if (!editTextPass.getText().toString().equals("") && !editTextMail.getText().toString().equals("")) {
-                    ComprobarDatos comprobarDatos = new ComprobarDatos();
-                    comprobarDatos.execute(" ", " ", " ");
-                } else {
-                    editTextMail.setHintTextColor(Color.rgb(203, 67, 53));
-                    editTextPass.setHintTextColor(Color.rgb(203, 67, 53));
-                    Toast.makeText(LoginActivity.this, R.string.toast_campos, Toast.LENGTH_SHORT).show();
+                    if (!editTextPass.getText().toString().equals("") && !editTextMail.getText().toString().equals("")) {
+                        ComprobarDatos comprobarDatos = new ComprobarDatos();
+                        comprobarDatos.execute(" ", " ", " ");
+                    } else {
+                        editTextMail.setHintTextColor(Color.rgb(203, 67, 53));
+                        editTextPass.setHintTextColor(Color.rgb(203, 67, 53));
+                        Toast.makeText(LoginActivity.this, R.string.toast_campos, Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    AlertDialog.Builder dialogo2 = new AlertDialog.Builder(LoginActivity.this);
+                    dialogo2.setTitle("Error");
+                    dialogo2.setMessage(R.string.error_servidor);
+                    dialogo2.setCancelable(true);
+                    dialogo2.show();
                 }
 
             }
@@ -312,93 +324,86 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             super.onPostExecute(aVoid);
             existe = false;
             correcto = false;
-            try {
-                String[] lineas = total.split("\n");
-                for (String lin : lineas) {
-                    String[] campos = lin.split(",");
-                    //Se comprueba si algún correo de la tabla coincide con el correo introducido o bien si el mail obtenido del inicio con Google/Facebook coincide con alguno de la tabla
-                    if (campos[0].toString().equals(editTextMail.getText().toString()) || campos[0].toString().equals(mail)) {
-                        mailCampos = campos[0].toString();
-                        existe = true;
-                        // System.out.println(campos[0]);
-                    }
-                    //Si el correo existe se comprueba si la contraseña existe
-                    if (existe) {
-                        if (campos[5].toString().equals(editTextPass.getText().toString())) {
-                            correcto = true;
-                            System.out.println(correcto);
-                        }
 
-                    }
-                    //Mail solo está lleno si se inicia sesión con google/facebook, por lo que si está vacio no se ha seleccionado ninguna de estas dos opciones
-                    if (!mail.equals(" ")) {
-                        Inicio = true;
-                    }
-                    // Toast.makeText(LoginActivity.this, "Valor de "+mail, Toast.LENGTH_SHORT).show();
-                    System.out.println("Existe: " + existe);
-                    System.out.println("Contraseña: " + correcto);
-                    System.out.println("Iniciado con google/facebook: " + Inicio);
-                    System.out.println(campos[0]);
+            String[] lineas = total.split("\n");
+            for (String lin : lineas) {
+                String[] campos = lin.split(",");
+                //Se comprueba si algún correo de la tabla coincide con el correo introducido o bien si el mail obtenido del inicio con Google/Facebook coincide con alguno de la tabla
+                if (campos[0].toString().equals(editTextMail.getText().toString()) || campos[0].toString().equals(mail)) {
+                    mailCampos = campos[0].toString();
+                    existe = true;
+                    // System.out.println(campos[0]);
                 }
-                System.out.println("mail " + mail);
-                System.out.println("mailCampos " + mailCampos);
+                //Si el correo existe se comprueba si la contraseña existe
+                if (existe) {
+                    if (campos[5].toString().equals(editTextPass.getText().toString())) {
+                        correcto = true;
+                        System.out.println(correcto);
+                    }
 
-                if (!mailCampos.equals("")) {
-                    mail = mailCampos;
                 }
+                //Mail solo está lleno si se inicia sesión con google/facebook, por lo que si está vacio no se ha seleccionado ninguna de estas dos opciones
+                if (!mail.equals(" ")) {
+                    Inicio = true;
+                }
+                // Toast.makeText(LoginActivity.this, "Valor de "+mail, Toast.LENGTH_SHORT).show();
+                System.out.println("Existe: " + existe);
+                System.out.println("Contraseña: " + correcto);
+                System.out.println("Iniciado con google/facebook: " + Inicio);
+                System.out.println(campos[0]);
+            }
+            System.out.println("mail " + mail);
+            System.out.println("mailCampos " + mailCampos);
 
-                System.out.println("2 mail " + mail);
-                //Si existe el mail introducido y la contraseña es correcta o bien si se ha iniciado sesión con facebook y el correo existe, lanzamos el menu
-                if ((existe && correcto) || (Inicio && existe)) {
+            if (!mailCampos.equals("")) {
+                mail = mailCampos;
+            }
 
+            System.out.println("2 mail " + mail);
+            //Si existe el mail introducido y la contraseña es correcta o bien si se ha iniciado sesión con facebook y el correo existe, lanzamos el menu
+            if ((existe && correcto) || (Inicio && existe)) {
+
+                Intent i = new Intent(LoginActivity.this, MenuActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("email", mail);
+                startActivity(i);
+            } else {
+                //Si no coincide, pero si se ha iniciado sesión con Facebook/Google se inserta los datos obtenidos de este en la tabla y lanza el menú
+                if (Inicio) {
+
+
+                    Insertar(mail, " ", nom, Aps, " ", PasswordGenerator.getPassword(
+                            PasswordGenerator.MINUSCULAS +
+                                    PasswordGenerator.MAYUSCULAS +
+                                    PasswordGenerator.ESPECIALES, 8));
                     Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("email", mail);
                     startActivity(i);
-                } else {
-                    //Si no coincide, pero si se ha iniciado sesión con Facebook/Google se inserta los datos obtenidos de este en la tabla y lanza el menú
-                    if (Inicio) {
 
-
-                        Insertar(mail, " ", nom, Aps, " ", PasswordGenerator.getPassword(
-                                PasswordGenerator.MINUSCULAS +
-                                        PasswordGenerator.MAYUSCULAS +
-                                        PasswordGenerator.ESPECIALES, 8));
-                        Intent i = new Intent(LoginActivity.this, MenuActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra("email", mail);
-                        startActivity(i);
-
-                        if (iniciado) {
-                            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<com.google.android.gms.common.api.Status>() {
-                                @Override
-                                public void onResult(@NonNull com.google.android.gms.common.api.Status status) {
-                                    if (status.isSuccess()) {
-                                        iniciado = false;
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
-                                    }
+                    if (iniciado) {
+                        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<com.google.android.gms.common.api.Status>() {
+                            @Override
+                            public void onResult(@NonNull com.google.android.gms.common.api.Status status) {
+                                if (status.isSuccess()) {
+                                    iniciado = false;
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                        }
-
-                        //Por el contrario si no coincide, el mail o la contraseña son erroneas
-                    } else {
-                        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
-                        dialogo1.setTitle("Error");
-                        dialogo1.setMessage(R.string.NoReconocido);
-                        dialogo1.setCancelable(true);
-                        dialogo1.show();
+                            }
+                        });
                     }
+
+                    //Por el contrario si no coincide, el mail o la contraseña son erroneas
+                } else {
+                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
+                    dialogo1.setTitle("Error");
+                    dialogo1.setMessage(R.string.NoReconocido);
+                    dialogo1.setCancelable(true);
+                    dialogo1.show();
                 }
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
-                dialogo1.setTitle("Error");
-                dialogo1.setMessage(R.string.error_servidor);
-                dialogo1.setCancelable(true);
-                dialogo1.show();
             }
+
 
         }
 
@@ -417,11 +422,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
-                dialogo1.setTitle("Error");
-                dialogo1.setMessage(R.string.error_servidor);
-                dialogo1.setCancelable(true);
-                dialogo1.show();
+
             }
             try {
                 url = new URL(SERVIDOR + LISTADOUSU);
@@ -511,6 +512,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
+    public boolean conexion() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
 
@@ -547,4 +559,5 @@ class PasswordGenerator {
 
         return pswd;
     }
+
 }

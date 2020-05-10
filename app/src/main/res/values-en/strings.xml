@@ -43,4 +43,5 @@
     <string name="toast_caracteres">"Password must be a minimum of 8 characters "</string>
     <string name="toast_NoMail">"Invalid mail "</string>
     <string name="NoReconocido">Email or password not recognized, try again or if you are not registered please register</string>
+    <string name="ubicación">"Activate the location to perform the test "</string>
 </resources>
