@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.covid_19">
-
+    package="com.mario.covid_19">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -21,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".RecuperarActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -36,7 +35,7 @@
 
         <activity
             android:name=".MapaCasosActivity"
-            android:label="@string/title_activity_mapa_casos"></activity>
+            android:label="@string/title_activity_mapa_casos" />
         <activity android:name=".HospitalActivity" />
         <activity android:name=".Covid_19App" />
         <activity android:name=".TestActivity" />
@@ -54,7 +53,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
     </application>
 
 </manifest>

@@ -49,6 +49,10 @@
     <string name="toast_NoMail">Mail invalido</string>
     <string name="NoReconocido">Email o contraseña no reconocidas, pruebe de nuevo o bien si no está registrado por favor registrese</string>
     <string name="ubicación">Active la ubicación para realizar el test</string>
+    <string name="olvidar">¿Olvidó la contraseña?</string>
+    <string name="Recuperar">Recuperar</string>
+    <string name="EmailNoReconocido">Email no reconocido</string>
+    <string name="se_requiere">Debe rellenar todos los campos</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.covid_19;
+package com.mario.covid_19;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -61,7 +61,7 @@ import java.net.URLConnection;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    TextView registrar;
+    TextView registrar,recuperar;
     EditText editTextMail, editTextPass;
     Button buttonInicio;
     private LoginButton loginButton;
@@ -93,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
         locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
         registrar = findViewById(R.id.textViewRegistrar);
+        recuperar = findViewById(R.id.textViewOlvido);
         editTextMail = findViewById(R.id.editTextEmail);
         editTextPass = findViewById(R.id.editTextPass);
         buttonInicio = findViewById(R.id.buttonLogin);
@@ -167,6 +168,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     dialogo2.show();
                 }
 
+            }
+        });
+        recuperar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, RecuperarActivity.class);
+                startActivity(i);
             }
         });
 

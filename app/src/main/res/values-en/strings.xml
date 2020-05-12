@@ -44,4 +44,8 @@
     <string name="toast_NoMail">"Invalid mail "</string>
     <string name="NoReconocido">Email or password not recognized, try again or if you are not registered please register</string>
     <string name="ubicación">"Activate the location to perform the test "</string>
+    <string name="olvidar">"Forgot password? "</string>
+    <string name="Recuperar">"Recover "</string>
+    <string name="EmailNoReconocido">Email not recognized</string>
+    <string name="se_requiere">You must fill in the all fields</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.covid_19;
+package com.mario.covid_19;
 
 import android.app.Application;
 
