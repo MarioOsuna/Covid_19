@@ -3,8 +3,13 @@ package com.mario.covid_19;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,8 +42,10 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
     static String SERVIDOR = "http://tfgcovid19.000webhostapp.com/";
     static String LISTADOENFERMOS = "listadoCSVEnfermo.php";
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         buttonOff = findViewById(R.id.buttonOff);
@@ -68,7 +75,7 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
 
                 LoginManager.getInstance().logOut();
 
-               if (LoginActivity.iniciado) {
+                if (LoginActivity.iniciado) {
                     Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
                         @Override
                         public void onResult(@NonNull com.google.android.gms.common.api.Status status) {
@@ -94,10 +101,18 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
         buttonOP2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (conexion()) {
 
-                  ListarEnfermos listarEnfermos=new ListarEnfermos();
-                  listarEnfermos.execute();
-
+                    ListarEnfermos listarEnfermos = new ListarEnfermos();
+                    listarEnfermos.execute();
+                } else {
+                    AlertDialog.Builder dialogo2 = new AlertDialog.Builder(MenuActivity.this);
+                    dialogo2.setTitle("Error");
+                    dialogo2.setIcon(R.drawable.out);
+                    dialogo2.setMessage(R.string.error_servidor);
+                    dialogo2.setCancelable(true);
+                    dialogo2.show();
+                }
 
 
             }
@@ -105,8 +120,17 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
         buttonOP3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (conexion()) {
                 Intent i = new Intent(MenuActivity.this, MapaCasosActivity.class);
                 startActivity(i);
+                }else {
+                    AlertDialog.Builder dialogo2 = new AlertDialog.Builder(MenuActivity.this);
+                    dialogo2.setTitle("Error");
+                    dialogo2.setIcon(R.drawable.out);
+                    dialogo2.setMessage(R.string.error_servidor);
+                    dialogo2.setCancelable(true);
+                    dialogo2.show();
+                }
             }
         });
 
@@ -147,10 +171,10 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
                     }
 
                 }
-                if(existe){
+                if (existe) {
                     Intent i = new Intent(MenuActivity.this, HospitalActivity.class);
                     startActivity(i);
-                }else{
+                } else {
                     Intent i = new Intent(MenuActivity.this, TestActivity.class);
                     startActivity(i);
                 }
@@ -160,6 +184,7 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
                 e.printStackTrace();
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MenuActivity.this);
                 dialogo1.setTitle("Error");
+                dialogo1.setIcon(R.drawable.out);
                 dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
@@ -204,6 +229,7 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
                 e.printStackTrace();
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MenuActivity.this);
                 dialogo1.setTitle("Error");
+                dialogo1.setIcon(R.drawable.out);
                 dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
@@ -211,6 +237,7 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
 
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MenuActivity.this);
                 dialogo1.setTitle("Error");
+                dialogo1.setIcon(R.drawable.out);
                 dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
@@ -219,6 +246,17 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
             Log.i("CONEXION", total);
 
             return null;
+        }
+    }
+
+    public boolean conexion() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -53,6 +53,7 @@
     <string name="Recuperar">Recuperar</string>
     <string name="EmailNoReconocido">Email no reconocido</string>
     <string name="se_requiere">Debe rellenar todos los campos</string>
+    <string name="title_activity_probando">Map</string>
 
 
 </resources>

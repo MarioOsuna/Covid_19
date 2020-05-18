@@ -2,9 +2,11 @@ package com.mario.covid_19;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -33,8 +35,10 @@ public class RecuperarActivity extends AppCompatActivity {
     static String LISTADOUSU = "listadoCSVUsuario.php";
     static String MODIFICARPASS = "ModificarPassPOST.php";
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -54,18 +58,23 @@ public class RecuperarActivity extends AppCompatActivity {
                     if (editTextpass1.getText().toString().equals("") || editTextmail.getText().toString().equals("") || editTextpass2.getText().toString().equals("")) {
                         Toast.makeText(RecuperarActivity.this, R.string.se_requiere, Toast.LENGTH_SHORT).show();
                     } else {
-                        if (editTextpass1.getText().toString().equals(editTextpass2.getText().toString())) {
 
-                            ListarUsuario cambiarpass = new ListarUsuario();
-                            cambiarpass.execute("");
+                        if (editTextpass1.getText().toString().equals(editTextpass2.getText().toString())) {
+                            if (editTextpass1.getText().toString().length() >= 8) {
+                                ListarUsuario cambiarpass = new ListarUsuario();
+                                cambiarpass.execute("");
+                            } else {
+                                Toast.makeText(RecuperarActivity.this, R.string.toast_caracteres, Toast.LENGTH_SHORT).show();
+                            }
 
                         } else {
                             Toast.makeText(RecuperarActivity.this, R.string.error_pass1, Toast.LENGTH_SHORT).show();
                         }
                     }
-                }else{
+                } else {
                     AlertDialog.Builder dialogo2 = new AlertDialog.Builder(RecuperarActivity.this);
                     dialogo2.setTitle("Error");
+                    dialogo2.setIcon(R.drawable.out);
                     dialogo2.setMessage(R.string.error_servidor);
                     dialogo2.setCancelable(true);
                     dialogo2.show();
@@ -161,6 +170,7 @@ public class RecuperarActivity extends AppCompatActivity {
                 e.printStackTrace();
                 AlertDialog.Builder dialogo2 = new AlertDialog.Builder(RecuperarActivity.this);
                 dialogo2.setTitle("Error");
+                dialogo2.setIcon(R.drawable.out);
                 dialogo2.setMessage(R.string.error_servidor);
                 dialogo2.setCancelable(true);
                 dialogo2.show();
@@ -223,6 +233,7 @@ public class RecuperarActivity extends AppCompatActivity {
             a.printStackTrace();
             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RecuperarActivity.this);
             dialogo1.setTitle("Error");
+            dialogo1.setIcon(R.drawable.out);
             dialogo1.setMessage(R.string.error_servidor);
             dialogo1.setCancelable(true);
             dialogo1.show();

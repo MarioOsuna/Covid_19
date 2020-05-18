@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -49,9 +51,12 @@ public class TestActivity extends AppCompatActivity {
     public static String Latitud = "0";
     public static String Longitud = "0";
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -116,6 +121,7 @@ public class TestActivity extends AppCompatActivity {
                     }else{
                         AlertDialog.Builder dialogo2 = new AlertDialog.Builder(TestActivity.this);
                         dialogo2.setTitle("Error");
+                        dialogo2.setIcon(R.drawable.icono);
                         dialogo2.setMessage(R.string.ubicación);
                         dialogo2.setCancelable(true);
                         dialogo2.show();
@@ -123,6 +129,7 @@ public class TestActivity extends AppCompatActivity {
                 } else {
                     AlertDialog.Builder dialogo2 = new AlertDialog.Builder(TestActivity.this);
                     dialogo2.setTitle("Error");
+                    dialogo2.setIcon(R.drawable.out);
                     dialogo2.setMessage(R.string.error_servidor);
                     dialogo2.setCancelable(true);
                     dialogo2.show();
@@ -230,6 +237,7 @@ public class TestActivity extends AppCompatActivity {
                 e.printStackTrace();
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(TestActivity.this);
                 dialogo1.setTitle("Error");
+                dialogo1.setIcon(R.drawable.out);
                 dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
@@ -278,6 +286,7 @@ public class TestActivity extends AppCompatActivity {
         } catch (RuntimeException r) {
             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(TestActivity.this);
             dialogo1.setTitle("Error");
+            dialogo1.setIcon(R.drawable.out);
             dialogo1.setMessage(R.string.error_servidor);
             dialogo1.setCancelable(true);
             dialogo1.show();

@@ -8,14 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:176480334916:android:f8ad1aba7fe14b23753811",
+        "mobilesdk_app_id": "1:176480334916:android:8fbc749c706d612c753811",
         "android_client_info": {
           "package_name": "com.mario.covid_19"
         }
       },
       "oauth_client": [
         {
-          "client_id": "176480334916-5nsdodp2fo2sge46c1leontqbh2ig4j5.apps.googleusercontent.com",
+          "client_id": "176480334916-dmkrp67seh9bvtpaotbna5suhbbjjlb2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mario.covid_19",

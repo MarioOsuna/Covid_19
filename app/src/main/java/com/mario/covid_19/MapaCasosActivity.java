@@ -141,6 +141,7 @@ public class MapaCasosActivity extends FragmentActivity implements OnMapReadyCal
 
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MapaCasosActivity.this);
                 dialogo1.setTitle("Error");
+                dialogo1.setIcon(R.drawable.out);
                 dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();

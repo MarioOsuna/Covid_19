@@ -2,10 +2,12 @@ package com.mario.covid_19;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -39,8 +41,10 @@ public class RegistrarActivity extends AppCompatActivity {
     Boolean existe;
 
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -111,6 +115,7 @@ public class RegistrarActivity extends AppCompatActivity {
                 }else{
                     AlertDialog.Builder dialogo2 = new AlertDialog.Builder(RegistrarActivity.this);
                     dialogo2.setTitle("Error");
+                    dialogo2.setIcon(R.drawable.out);
                     dialogo2.setMessage(R.string.error_servidor);
                     dialogo2.setCancelable(true);
                     dialogo2.show();
@@ -160,6 +165,7 @@ public class RegistrarActivity extends AppCompatActivity {
             a.printStackTrace();
             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RegistrarActivity.this);
             dialogo1.setTitle("Error");
+            dialogo1.setIcon(R.drawable.out);
             dialogo1.setMessage(R.string.error_servidor);
             dialogo1.setCancelable(true);
             dialogo1.show();
@@ -254,6 +260,7 @@ public class RegistrarActivity extends AppCompatActivity {
                 e.printStackTrace();
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RegistrarActivity.this);
                 dialogo1.setTitle("Error");
+                dialogo1.setIcon(R.drawable.out);
                 dialogo1.setMessage(R.string.error_servidor);
                 dialogo1.setCancelable(true);
                 dialogo1.show();
