@@ -46,14 +46,28 @@
     <string name="requerido">* (Campos obligatorios)</string>
     <string name="pass">Contraseña</string>
     <string name="toast_caracteres">La contraseña debe tener un mínimo de 8 caracteres</string>
-    <string name="toast_NoMail">Mail invalido</string>
+    <string name="toast_NoMail">Mail inválido</string>
     <string name="NoReconocido">Email o contraseña no reconocidas, pruebe de nuevo o bien si no está registrado por favor registrese</string>
     <string name="ubicación">Active la ubicación para realizar el test</string>
     <string name="olvidar">¿Olvidó la contraseña?</string>
     <string name="Recuperar">Recuperar</string>
     <string name="EmailNoReconocido">Email no reconocido</string>
     <string name="se_requiere">Debe rellenar todos los campos</string>
-    <string name="title_activity_probando">Map</string>
+    <string name="title_activity_probando" translatable="false">Map</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
+
+    <string name="menu_home" translatable="false">Home</string>
+    <string name="menu_gallery" translatable="false">Gallery</string>
+    <string name="menu_slideshow" translatable="false">Slideshow</string>
+
+    <string name="home_second" translatable="false">Home Second</string>
+    <string name="title_activity_configurar" translatable="false">ConfigurarActivity</string>
+    <string name="New_pass">Covid_19: Cambio de contraseña</string>
 
 
 </resources>

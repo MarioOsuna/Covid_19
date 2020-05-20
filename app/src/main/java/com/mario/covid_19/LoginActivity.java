@@ -178,9 +178,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         recuperar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, RecuperarActivity.class);
+               Intent i = new Intent(LoginActivity.this, Recuperar_1Activity.class);
                 startActivity(i);
-            }
+
+                //El bueno
+
+                /*new MailJob("asistentecovidtfg@gmail.com", "11junio2020").execute(
+                        new MailJob.Mail("asistentecovidtfg@gmail.com", "osunamario26@gmail.com", "New Password", "Contraseña generada al azar:\n")
+                );*/
+
+        }
         });
 
         registrar.setOnClickListener(new View.OnClickListener() {

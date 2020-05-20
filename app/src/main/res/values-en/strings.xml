@@ -48,4 +48,5 @@
     <string name="Recuperar">"Recover "</string>
     <string name="EmailNoReconocido">Email not recognized</string>
     <string name="se_requiere">You must fill in the all fields</string>
+    <string name="New_pass">Covid_19:  Change of password</string>
 </resources>

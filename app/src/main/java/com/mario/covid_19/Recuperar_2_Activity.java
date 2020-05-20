@@ -28,12 +28,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class RecuperarActivity extends AppCompatActivity {
+public class Recuperar_2_Activity extends AppCompatActivity {
     Button button;
-    EditText editTextpass1, editTextpass2, editTextmail;
+    EditText editTextpass1, editTextmail;
     static String SERVIDOR = "http://tfgcovid19.000webhostapp.com/";
     static String LISTADOUSU = "listadoCSVUsuario.php";
     static String MODIFICARPASS = "ModificarPassPOST.php";
+    String COMPROBAR_PASS;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -44,35 +45,40 @@ public class RecuperarActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recuperar);
+        setContentView(R.layout.activity_recuperar2);
 
-        button = findViewById(R.id.buttonRecuperar);
-        editTextmail = findViewById(R.id.editTextRecupEmail);
+        button = findViewById(R.id.button5);
+        editTextmail = findViewById(R.id.editText);
+        Bundle datos = this.getIntent().getExtras();
+        String email = datos.getString("email");
+
+        COMPROBAR_PASS = datos.getString("pass");
+
+        // Toast.makeText(this, COMPROBAR_PASS, Toast.LENGTH_SHORT).show();
+        editTextmail.setText(email);
         editTextpass1 = findViewById(R.id.editTextRecupPass1);
-        editTextpass2 = findViewById(R.id.editTextRecupPass2);
+        // editTextpass2 = findViewById(R.id.editTextRecupPass2);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (conexion()) {
-                    if (editTextpass1.getText().toString().equals("") || editTextmail.getText().toString().equals("") || editTextpass2.getText().toString().equals("")) {
-                        Toast.makeText(RecuperarActivity.this, R.string.se_requiere, Toast.LENGTH_SHORT).show();
+                    if (editTextpass1.getText().toString().equals("") || editTextmail.getText().toString().equals("")) {
+                        Toast.makeText(Recuperar_2_Activity.this, R.string.se_requiere, Toast.LENGTH_SHORT).show();
                     } else {
+                        if (editTextpass1.getText().toString().equals(COMPROBAR_PASS)) {
 
-                        if (editTextpass1.getText().toString().equals(editTextpass2.getText().toString())) {
-                            if (editTextpass1.getText().toString().length() >= 8) {
-                                ListarUsuario cambiarpass = new ListarUsuario();
-                                cambiarpass.execute("");
-                            } else {
-                                Toast.makeText(RecuperarActivity.this, R.string.toast_caracteres, Toast.LENGTH_SHORT).show();
-                            }
-
+                            ListarUsuario cambiarpass = new ListarUsuario();
+                            cambiarpass.execute(COMPROBAR_PASS);
                         } else {
-                            Toast.makeText(RecuperarActivity.this, R.string.error_pass1, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Recuperar_2_Activity.this, "Código inválido", Toast.LENGTH_SHORT).show();
                         }
+
+
                     }
                 } else {
-                    AlertDialog.Builder dialogo2 = new AlertDialog.Builder(RecuperarActivity.this);
+                    AlertDialog.Builder dialogo2 = new AlertDialog.Builder(Recuperar_2_Activity.this);
                     dialogo2.setTitle("Error");
                     dialogo2.setIcon(R.drawable.out);
                     dialogo2.setMessage(R.string.error_servidor);
@@ -86,6 +92,7 @@ public class RecuperarActivity extends AppCompatActivity {
     private class ListarUsuario extends AsyncTask<String, Void, Void> {
         String total = "";
         boolean existe;
+        String pass;
 
 
         @Override
@@ -115,13 +122,13 @@ public class RecuperarActivity extends AppCompatActivity {
 
             }
             if (existe) {
-                modificar(editTextmail.getText().toString(), editTextpass1.getText().toString());
+                modificar(editTextmail.getText().toString(), COMPROBAR_PASS);
 
-                Intent i = new Intent(RecuperarActivity.this, MenuActivity.class);
+                Intent i = new Intent(Recuperar_2_Activity.this, MenuActivity.class);
                 i.putExtra("email", editTextmail.getText().toString());
                 startActivity(i);
             } else {
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RecuperarActivity.this);
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Recuperar_2_Activity.this);
                 dialogo1.setTitle("Error");
                 dialogo1.setMessage(R.string.EmailNoReconocido);
                 dialogo1.setCancelable(true);
@@ -133,7 +140,7 @@ public class RecuperarActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(String... strings) {
-            //String script = strings[0];
+            pass = strings[0];
             //Obtenemos los datos que se le pasan al hilo, si es un inicio normal se le pasarán datos vacios
 
 
@@ -168,7 +175,7 @@ public class RecuperarActivity extends AppCompatActivity {
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-                AlertDialog.Builder dialogo2 = new AlertDialog.Builder(RecuperarActivity.this);
+                AlertDialog.Builder dialogo2 = new AlertDialog.Builder(Recuperar_2_Activity.this);
                 dialogo2.setTitle("Error");
                 dialogo2.setIcon(R.drawable.out);
                 dialogo2.setMessage(R.string.error_servidor);
@@ -231,7 +238,7 @@ public class RecuperarActivity extends AppCompatActivity {
         } catch (IOException e) {
         } catch (RuntimeException a) {
             a.printStackTrace();
-            AlertDialog.Builder dialogo1 = new AlertDialog.Builder(RecuperarActivity.this);
+            AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Recuperar_2_Activity.this);
             dialogo1.setTitle("Error");
             dialogo1.setIcon(R.drawable.out);
             dialogo1.setMessage(R.string.error_servidor);
