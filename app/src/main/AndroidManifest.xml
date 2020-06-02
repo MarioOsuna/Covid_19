@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mario.covid_19">
+    package="com.proyecto.TFG">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -20,11 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Recuperar_1Activity"></activity>
-        <activity
-            android:name=".ConfigurarActivity"
-            android:label="@string/title_activity_configurar"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ConfigurarActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,16 +33,17 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Recuperar_2_Activity"></activity>
+        <activity android:name=".Recuperar_1Activity" />
+        <activity android:name=".Recuperar_2_Activity" />
         <activity
             android:name=".MapaCasosActivity"
             android:label="@string/title_activity_mapa_casos" />
-        <activity android:name=".HospitalActivity"></activity>
-        <activity android:name=".Covid_19App" />
-        <activity android:name=".TestActivity"></activity>
-        <activity android:name=".PrevencionActivity"></activity>
-        <activity android:name=".MenuActivity"></activity>
-        <activity android:name=".RegistrarActivity"></activity>
+        <activity android:name=".HospitalActivity" />
+        <activity android:name=".TFGToxicoApp" />
+        <activity android:name=".TestActivity" />
+        <activity android:name=".PrevencionActivity" />
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".RegistrarActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

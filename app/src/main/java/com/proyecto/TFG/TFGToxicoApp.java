@@ -1,11 +1,11 @@
-package com.mario.covid_19;
+package com.proyecto.TFG;
 
 import android.app.Application;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
-public class Covid_19App extends Application {
+public class TFGToxicoApp extends Application {
 
     @Override
     public void onCreate() {

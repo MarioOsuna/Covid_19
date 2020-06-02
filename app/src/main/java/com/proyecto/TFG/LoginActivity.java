@@ -1,4 +1,4 @@
-package com.mario.covid_19;
+package com.proyecto.TFG;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -38,6 +39,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -63,13 +65,14 @@ import java.net.URLConnection;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    TextView registrar,recuperar;
+    TextView registrar, recuperar;
     EditText editTextMail, editTextPass;
     Button buttonInicio;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private GoogleApiClient googleApiClient;
     static String INSERTARUSUARIO = "insertarUsuariosPOST.php";
+    public static boolean IniciadoFacebook = false;
 
     private SignInButton signInButton;
     private int SIGN_INT_CODE = 777;
@@ -103,6 +106,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         buttonInicio = findViewById(R.id.buttonLogin);
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.loginButton);
+
+        LoginManager.getInstance().logOut();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -164,12 +169,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         editTextPass.setHintTextColor(Color.rgb(203, 67, 53));
                         Toast.makeText(LoginActivity.this, R.string.toast_campos, Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     AlertDialog.Builder dialogo2 = new AlertDialog.Builder(LoginActivity.this);
                     dialogo2.setTitle("Error");
                     dialogo2.setIcon(R.drawable.out);
                     dialogo2.setMessage(R.string.error_servidor);
-                    dialogo2.setCancelable(true);
+                    dialogo2.setCancelable(false);
+                    dialogo2.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            //aceptar();
+                            dialogo1.dismiss();
+                        }
+                    });
                     dialogo2.show();
                 }
 
@@ -178,7 +189,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         recuperar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent i = new Intent(LoginActivity.this, Recuperar_1Activity.class);
+                Intent i = new Intent(LoginActivity.this, Recuperar_1Activity.class);
                 startActivity(i);
 
                 //El bueno
@@ -187,7 +198,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         new MailJob.Mail("asistentecovidtfg@gmail.com", "osunamario26@gmail.com", "New Password", "Contraseña generada al azar:\n")
                 );*/
 
-        }
+            }
         });
 
         registrar.setOnClickListener(new View.OnClickListener() {
@@ -390,6 +401,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             } else {
                 //Si no coincide, pero si se ha iniciado sesión con Facebook/Google se inserta los datos obtenidos de este en la tabla y lanza el menú
                 if (Inicio) {
+                    IniciadoFacebook = true;
 
 
                     Insertar(mail, " ", nom, Aps, " ", PasswordGenerator.getPassword(
@@ -419,7 +431,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(LoginActivity.this);
                     dialogo1.setTitle("Error");
                     dialogo1.setMessage(R.string.NoReconocido);
-                    dialogo1.setCancelable(true);
+                    dialogo1.setCancelable(false);
+                    dialogo1.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            //aceptar();
+                            dialogo1.dismiss();
+                        }
+                    });
                     dialogo1.show();
                 }
             }
@@ -470,7 +488,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 dialogo2.setTitle("Error");
                 dialogo2.setIcon(R.drawable.out);
                 dialogo2.setMessage(R.string.error_servidor);
-                dialogo2.setCancelable(true);
+                dialogo2.setCancelable(false);
+                dialogo2.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        //aceptar();
+                        dialogo1.dismiss();
+                    }
+                });
                 dialogo2.show();
                 throw new RuntimeException(e);
             } catch (IOException e) {
@@ -528,7 +552,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             dialogo1.setTitle("Error");
             dialogo1.setIcon(R.drawable.out);
             dialogo1.setMessage(R.string.error_servidor);
-            dialogo1.setCancelable(true);
+            dialogo1.setCancelable(false);
+            dialogo1.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogo1, int id) {
+                    //aceptar();
+                    dialogo1.dismiss();
+                }
+            });
             dialogo1.show();
         }
 

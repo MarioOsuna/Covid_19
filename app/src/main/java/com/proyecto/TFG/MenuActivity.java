@@ -1,4 +1,4 @@
-package com.mario.covid_19;
+package com.proyecto.TFG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
@@ -34,7 +35,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MenuActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    Button buttonOff, buttonOP1, buttonOP2, buttonOP3;
+    Button buttonOff, buttonOP1, buttonOP2, buttonOP3, buttonConfi;
     TextView textView;
     private GoogleApiClient googleApiClient;
     public static String EMAIL_INICIADO;
@@ -52,6 +53,7 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
         buttonOP1 = findViewById(R.id.buttonPrevencion);
         buttonOP2 = findViewById(R.id.buttonSintomas);
         buttonOP3 = findViewById(R.id.buttonMapa);
+        buttonConfi = findViewById(R.id.buttonConfigurar);
         textView = findViewById(R.id.textViewNombre);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -110,7 +112,13 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
                     dialogo2.setTitle("Error");
                     dialogo2.setIcon(R.drawable.out);
                     dialogo2.setMessage(R.string.error_servidor);
-                    dialogo2.setCancelable(true);
+                    dialogo2.setCancelable(false);
+                    dialogo2.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            //aceptar();
+                            dialogo1.dismiss();
+                        }
+                    });
                     dialogo2.show();
                 }
 
@@ -121,14 +129,42 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
             @Override
             public void onClick(View v) {
                 if (conexion()) {
-                Intent i = new Intent(MenuActivity.this, MapaCasosActivity.class);
-                startActivity(i);
-                }else {
+                    Intent i = new Intent(MenuActivity.this, MapaCasosActivity.class);
+                    startActivity(i);
+                } else {
                     AlertDialog.Builder dialogo2 = new AlertDialog.Builder(MenuActivity.this);
                     dialogo2.setTitle("Error");
                     dialogo2.setIcon(R.drawable.out);
                     dialogo2.setMessage(R.string.error_servidor);
-                    dialogo2.setCancelable(true);
+                    dialogo2.setCancelable(false);
+                    dialogo2.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            //aceptar();
+                            dialogo1.dismiss();
+                        }
+                    });
+                    dialogo2.show();
+                }
+            }
+        });
+        buttonConfi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (conexion()) {
+                    Intent i = new Intent(MenuActivity.this, ConfigurarActivity.class);
+                    startActivity(i);
+                } else {
+                    AlertDialog.Builder dialogo2 = new AlertDialog.Builder(MenuActivity.this);
+                    dialogo2.setTitle("Error");
+                    dialogo2.setIcon(R.drawable.out);
+                    dialogo2.setMessage(R.string.error_servidor);
+                    dialogo2.setCancelable(false);
+                    dialogo2.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            //aceptar();
+                            dialogo1.dismiss();
+                        }
+                    });
                     dialogo2.show();
                 }
             }
@@ -186,7 +222,13 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
                 dialogo1.setTitle("Error");
                 dialogo1.setIcon(R.drawable.out);
                 dialogo1.setMessage(R.string.error_servidor);
-                dialogo1.setCancelable(true);
+                dialogo1.setCancelable(false);
+                dialogo1.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        //aceptar();
+                        dialogo1.dismiss();
+                    }
+                });
                 dialogo1.show();
             }
 
@@ -231,7 +273,13 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
                 dialogo1.setTitle("Error");
                 dialogo1.setIcon(R.drawable.out);
                 dialogo1.setMessage(R.string.error_servidor);
-                dialogo1.setCancelable(true);
+                dialogo1.setCancelable(false);
+                dialogo1.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        //aceptar();
+                        dialogo1.dismiss();
+                    }
+                });
                 dialogo1.show();
             } catch (RuntimeException r) {
 
@@ -239,7 +287,13 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.O
                 dialogo1.setTitle("Error");
                 dialogo1.setIcon(R.drawable.out);
                 dialogo1.setMessage(R.string.error_servidor);
-                dialogo1.setCancelable(true);
+                dialogo1.setCancelable(false);
+                dialogo1.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        //aceptar();
+                        dialogo1.dismiss();
+                    }
+                });
                 dialogo1.show();
             }
 

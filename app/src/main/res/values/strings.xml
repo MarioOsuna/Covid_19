@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Covid-19</string>
+    <string name="app_name" translatable="false">TFG</string>
     <string name="title_activity_maps">Mapa</string>
     <string name="login">Inicio de sesión</string>
     <string name="email" translatable="false">Email</string>
@@ -21,13 +21,12 @@
     <string name="Cancelar">Inicio cancelado</string>
     <string name="tlf">Teléfono</string>
     <string name="titlo_prev">QUÉDATE EN CASA.SALVA VIDAS.</string>
-    <string name="subtitulo">Ayuda a frenar el coronavirus</string>
+    <string name="subtitulo">Ayuda a frenar la enfermedad</string>
     <string name="uno">QUÉDATE en casa lo máximo posible</string>
     <string name="dos">MANTÉN el distanciamiento social</string>
     <string name="tres">LÁVATE las manos con frecuencia</string>
     <string name="cuatro">TOSE cubriéndote con el codo</string>
     <string name="cinco">CONTACTA si tienes sintomas</string>
-    <string name="texto">Protéjase a sí mismo y a quienes lo rodean informándose y tomando las precauciones adecuadas. Siga los consejos de su organismo de salud pública local. Para evitar la propagación de la COVID-19: Lávese las manos con frecuencia. Use agua y jabón o un desinfectante de manos a base de alcohol. Manténgase a una distancia segura de cualquier persona que tosa o estornude. No se toque los ojos, la nariz o la boca. Cuando tosa o estornude, cúbrase la nariz y la boca con el codo flexionado o con un pañuelo. Quédese en casa si se siente mal. Si tiene fiebre, tos y dificultad para respirar, solicite atención médica. Llame con antelación. Siga las instrucciones de su organismo sanitario local. Evitar las visitas innecesarias a los centros de atención médica permite que los sistemas sanitarios funcionen con mayor eficacia, lo que redunda en su protección y en la de los demás.</string>
     <string name="Informacion">Información general:</string>
     <string name="title_activity_hospital" translatable="false">Map</string>
     <string name="title_activity_mapa_casos" translatable="false">Map</string>
@@ -51,7 +50,7 @@
     <string name="ubicación">Active la ubicación para realizar el test</string>
     <string name="olvidar">¿Olvidó la contraseña?</string>
     <string name="Recuperar">Recuperar</string>
-    <string name="EmailNoReconocido">Email no reconocido</string>
+    <string name="EmailNoReconocido">No existe un usuario con ese email</string>
     <string name="se_requiere">Debe rellenar todos los campos</string>
     <string name="title_activity_probando" translatable="false">Map</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
@@ -67,7 +66,23 @@
 
     <string name="home_second" translatable="false">Home Second</string>
     <string name="title_activity_configurar" translatable="false">ConfigurarActivity</string>
-    <string name="New_pass">Covid_19: Cambio de contraseña</string>
+    <string name="New_pass">Cambio de contraseña</string>
+    <string name="enviar">Enviar</string>
+    <string name="codigo">Código</string>
+    <string name="cod_inva">código inválido</string>
+    <string name="Email_pass">Si pulsa Confirmar recibirá un mensaje con una nueva contraseña</string>
+    <string name="Confirmar">Confirmar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="texto">Protéjase a sí mismo y a quienes lo rodean informándose y tomando las precauciones adecuadas. Siga los consejos de su organismo de salud pública local. Para evitar la propagación de una enfermedad: Lávese las manos con frecuencia. Use agua y jabón o un desinfectante de manos a base de alcohol. Manténgase a una distancia segura de cualquier persona que tosa o estornude. No se toque los ojos, la nariz o la boca. Cuando tosa o estornude, cúbrase la nariz y la boca con el codo flexionado o con un pañuelo. Quédese en casa si se siente mal. Si tiene fiebre, tos y dificultad para respirar, solicite atención médica. Llame con antelación. Siga las instrucciones de su organismo sanitario local. Evitar las visitas innecesarias a los centros de atención médica permite que los sistemas sanitarios funcionen con mayor eficacia, lo que redunda en su protección y en la de los demás.</string>
+    <string name="no_esta_enfermo">No aparenta sintomas de tener alguna enfermedad</string>
+    <string name="Configurar">Configurar</string>
+    <string name="Guardar">Guardar cambios</string>
+    <string name="Eliminar">Eliminar usuario</string>
+    <string name="Antigua_pass">Antigua contraseña</string>
+    <string name="Modificar_Datos">Si continua modificará los datos que haya solicidatado modificar si está de acuerdo con los datos introducidos pulse aceptar</string>
+    <string name="Eliminar_datos">Está apunto de eliminar su usuario registrado en esta app, una vez pulse confirmar no podrá volver a iniciar sesión con sus credenciales.¿Desea continuar?</string>
+    <string name="Pass_vieja">La contraseña introducida no coincide con la ya establecida</string>
+    <string name="Coincide">La nueva contraseña no puede coincidir con la anterior</string>
 
 
 </resources>

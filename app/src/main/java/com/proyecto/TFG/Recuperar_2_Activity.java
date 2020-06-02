@@ -1,10 +1,11 @@
-package com.mario.covid_19;
+package com.proyecto.TFG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
@@ -72,7 +73,7 @@ public class Recuperar_2_Activity extends AppCompatActivity {
                             ListarUsuario cambiarpass = new ListarUsuario();
                             cambiarpass.execute(COMPROBAR_PASS);
                         } else {
-                            Toast.makeText(Recuperar_2_Activity.this, "Código inválido", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Recuperar_2_Activity.this,R.string.cod_inva, Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -82,7 +83,13 @@ public class Recuperar_2_Activity extends AppCompatActivity {
                     dialogo2.setTitle("Error");
                     dialogo2.setIcon(R.drawable.out);
                     dialogo2.setMessage(R.string.error_servidor);
-                    dialogo2.setCancelable(true);
+                    dialogo2.setCancelable(false);
+                    dialogo2.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            //aceptar();
+                            dialogo1.dismiss();
+                        }
+                    });
                     dialogo2.show();
                 }
             }
@@ -131,7 +138,13 @@ public class Recuperar_2_Activity extends AppCompatActivity {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(Recuperar_2_Activity.this);
                 dialogo1.setTitle("Error");
                 dialogo1.setMessage(R.string.EmailNoReconocido);
-                dialogo1.setCancelable(true);
+                dialogo1.setCancelable(false);
+                dialogo1.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        //aceptar();
+                        dialogo1.dismiss();
+                    }
+                });
                 dialogo1.show();
             }
 
@@ -245,6 +258,10 @@ public class Recuperar_2_Activity extends AppCompatActivity {
             dialogo1.setCancelable(true);
             dialogo1.show();
         }
+
     }
+
+
 }
+
 

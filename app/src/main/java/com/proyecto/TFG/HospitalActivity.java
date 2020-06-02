@@ -1,8 +1,9 @@
-package com.mario.covid_19;
+package com.proyecto.TFG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,7 +36,14 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
         dialogo1.setTitle(R.string.Indicios_enfermedad);
         dialogo1.setIcon(R.drawable.advertencia);
         dialogo1.setMessage(R.string.direccion_enfermo);
-        dialogo1.setCancelable(true);
+        dialogo1.setCancelable(false);
+        dialogo1.setPositiveButton(R.string.Confirmar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                //aceptar();
+               // finish();
+                dialogo1.dismiss();
+            }
+        });
         dialogo1.show();
         button.setOnClickListener(new View.OnClickListener() {
             @Override

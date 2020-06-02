@@ -14,7 +14,8 @@
         android:layout_marginTop="59dp"
         android:layout_marginEnd="86dp"
         android:ems="10"
-        android:hint="Código"
+        android:gravity="center_horizontal"
+        android:hint="@string/codigo"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
@@ -27,7 +28,7 @@
         android:layout_marginTop="175dp"
         android:layout_marginEnd="136dp"
         android:background="@drawable/btn"
-        android:text="Enviar"
+        android:text="@string/enviar"
         android:textColor="@drawable/txt_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextRecupPass1" />
@@ -41,6 +42,7 @@
         android:editable="false"
         android:ems="10"
         android:enabled="false"
+        android:gravity="center_horizontal"
         android:hint="@string/email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"

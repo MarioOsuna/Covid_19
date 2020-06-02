@@ -1,4 +1,4 @@
-package com.mario.covid_19;
+package com.proyecto.TFG;
 
 import androidx.appcompat.app.AppCompatActivity;
 

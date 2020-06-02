@@ -7,27 +7,43 @@
     android:background="@drawable/degradado"
     tools:context=".MenuActivity">
 
+    <TextView
+        android:id="@+id/textViewNombre"
+        android:layout_width="270dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="52dp"
+        android:gravity="center_horizontal"
+        android:text="Correo"
+        android:textColor="#d35656"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonOff"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        android:id="@+id/buttonMapa"
+        android:id="@+id/buttonConfigurar"
         android:layout_width="266dp"
         android:layout_height="70dp"
+
+
         android:layout_marginStart="72dp"
-        android:layout_marginTop="59dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="73dp"
         android:background="@drawable/btn"
-        android:foregroundGravity="center"
-        android:text="@string/mapa"
+        android:text="@string/Configurar"
         android:textColor="@drawable/txt_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSintomas" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonMapa" />
 
     <Button
         android:id="@+id/buttonPrevencion"
         android:layout_width="266dp"
         android:layout_height="70dp"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="73dp"
         android:background="@drawable/btn"
         android:foregroundGravity="center"
@@ -42,7 +58,7 @@
         android:layout_width="266dp"
         android:layout_height="70dp"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="29dp"
         android:layout_marginEnd="73dp"
         android:background="@drawable/btn"
         android:foregroundGravity="center"
@@ -52,29 +68,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonPrevencion" />
 
-    <TextView
-        android:id="@+id/textViewNombre"
-        android:layout_width="270dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="40dp"
-        android:gravity="center_horizontal"
-        android:text="Correo"
-        android:textColor="#d35656"
-        android:textSize="20sp"
+    <Button
+        android:id="@+id/buttonMapa"
+        android:layout_width="266dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="73dp"
+        android:background="@drawable/btn"
+        android:foregroundGravity="center"
+        android:text="@string/mapa"
+        android:textColor="@drawable/txt_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSintomas" />
 
     <Button
         android:id="@+id/buttonOff"
         android:layout_width="49dp"
         android:layout_height="49dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="17dp"
         android:background="@android:drawable/ic_lock_power_off"
         android:textSize="10sp"
         app:layout_constraintEnd_toStartOf="@+id/textViewNombre"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
